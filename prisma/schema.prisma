@@ -1,0 +1,64 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String         @id @default(auto()) @map("_id") @db.ObjectId
+  username        String         @unique
+  password        String
+  name            String
+  email           String         @unique
+  avatarUrl       String?        @map("avatar_url")
+  coverImageUrl   String?        @map("cover_image_url")
+  bio             String?
+  createdAt       DateTime       @default(now()) @map("created_at")
+  updatedAt       DateTime       @updatedAt @map("updated_at")
+  followingIds    String[]       @map("following_ids") @db.ObjectId
+  hasNotification Boolean?       @map("has_notification")
+  posts           Post[]
+  comments        Comment[]
+  notifications   Notification[]
+}
+
+model Post {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  content   String
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  likedIds  String[]  @map("liked_ids") @db.ObjectId
+  imageUrls String[]  @map("image_urls")
+  userId    String    @map("user_id") @db.ObjectId
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  comments  Comment[]
+}
+
+model Comment {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  content   String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  likedIds  String[] @map("liked_ids") @db.ObjectId
+  imageUrls String[] @map("image_urls")
+  userId    String   @map("user_id") @db.ObjectId
+  postId    String   @map("post_id") @db.ObjectId
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+}
+
+model Notification {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  content   String
+  createdAt DateTime @default(now()) @map("created_at")
+  userId    String   @map("user_id") @db.ObjectId
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}

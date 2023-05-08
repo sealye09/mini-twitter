@@ -1,58 +1,26 @@
-import Layout from '@/components/Layout';
-import { log } from 'console';
+import Header from '@/components/Header';
+import LoginModal from '@/components/modals/LoginModal';
+import useCurrentUser from '@/hooks/useCurrentUser';
+import { useSession } from 'next-auth/react';
 import { Inter } from 'next/font/google';
 
 import { useEffect } from 'react';
-import { themeChange } from 'theme-change';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
+  const { data } = useCurrentUser();
   useEffect(() => {
-    themeChange(false);
-    // 👆 false parameter is required for react project
+    console.log(data);
   }, []);
+  const session = useSession();
+  console.log(session.data);
+
   return (
     <main className={inter.className}>
-      <Layout>
-        <div>
-          <button
-            className='btn rounded-full'
-            data-set-theme='light'
-            data-act-class='ACTIVECLASS'
-          >
-            light
-          </button>
-          <button
-            className='btn rounded-full'
-            data-set-theme='dark'
-            data-act-class='ACTIVECLASS'
-          >
-            dark
-          </button>
-          <button
-            className='btn rounded-full'
-            data-set-theme='cupcake'
-            data-act-class='ACTIVECLASS'
-          >
-            cupcake
-          </button>
-          <button
-            className='btn rounded-full'
-            data-set-theme='bumblebee'
-            data-act-class='ACTIVECLASS'
-          >
-            bumblebee
-          </button>
-          <button
-            className='btn rounded-full'
-            data-set-theme='winter'
-            data-act-class='ACTIVECLASS'
-          >
-            winter
-          </button>
-        </div>
-      </Layout>
+      <div>
+        <Header label='Home' />
+      </div>
     </main>
   );
 }
