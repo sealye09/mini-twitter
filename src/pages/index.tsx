@@ -1,10 +1,9 @@
-import Header from '@/components/Header';
-import LoginModal from '@/components/modals/LoginModal';
-import useCurrentUser from '@/hooks/useCurrentUser';
-import { useSession } from 'next-auth/react';
-import { Inter } from 'next/font/google';
-
 import { useEffect } from 'react';
+import { Inter } from 'next/font/google';
+import { useSession } from 'next-auth/react';
+
+import useCurrentUser from '@/hooks/useCurrentUser';
+import Header from '@/components/Header';
 
 const inter = Inter({ subsets: ['latin'] });
 

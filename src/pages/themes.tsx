@@ -1,6 +1,7 @@
-import Header from '@/components/Header';
 import React, { FC, useEffect } from 'react';
 import { themeChange } from 'theme-change';
+
+import Header from '@/components/Header';
 
 interface ThemesViewProps {}
 

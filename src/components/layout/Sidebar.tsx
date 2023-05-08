@@ -1,18 +1,20 @@
+import React, { FC, useMemo } from 'react';
 import { useRouter } from 'next/router';
-import Image from 'next/image';
-import React, { useMemo } from 'react';
-import { BsBellFill, BsXDiamondFill, BsHouseFill, BsTwitter, BsFillPersonFill } from 'react-icons/bs';
+import { signOut } from 'next-auth/react';
+
+import { BsBellFill, BsXDiamondFill, BsHouseFill, BsTwitter } from 'react-icons/bs';
 import { FaFeather, FaUser } from 'react-icons/fa';
-import { GoPrimitiveDot } from 'react-icons/go';
+
 import useLoginModal from '@/hooks/useLoginModal';
 import useRegisterModal from '@/hooks/useRegisterModal';
-import SiderbarItem from './SiderbarItem';
 import useCurrentUser from '@/hooks/useCurrentUser';
-import avatar from '@/../public/images/avatar.png';
-import { signOut } from 'next-auth/react';
+
+import SideBarItem from './SideBarItem';
 import Avatar from '../Avatar';
 
-const Sidebar = () => {
+interface SideBarProps {}
+
+const SideBar: FC<SideBarProps> = () => {
   const router = useRouter();
   const registerStore = useRegisterModal();
   const loginStore = useLoginModal();
@@ -78,7 +80,7 @@ const Sidebar = () => {
           </div>
         </li>
         {items.map((item) => (
-          <SiderbarItem
+          <SideBarItem
             key={item.label}
             label={item.label}
             icon={item.icon}
@@ -162,4 +164,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar;
+export default SideBar;

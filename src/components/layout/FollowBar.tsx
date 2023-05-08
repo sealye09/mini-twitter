@@ -1,11 +1,13 @@
-import Image from 'next/image';
-import useUsers from '@/hooks/useUsers';
-import avatar from '@/../public/images/avatar.png';
-import { User } from '@prisma/client';
 import { useRouter } from 'next/router';
-import Avatar from '../Avatar';
+import { User } from '@prisma/client';
 
-const FollowBar = () => {
+import useUsers from '@/hooks/useUsers';
+import Avatar from '../Avatar';
+import { FC } from 'react';
+
+interface FollowBarProps {}
+
+const FollowBar: FC<FollowBarProps> = () => {
   const router = useRouter();
   const { data, error, isLoading, mutate } = useUsers();
 
