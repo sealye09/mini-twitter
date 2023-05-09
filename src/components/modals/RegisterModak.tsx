@@ -28,19 +28,19 @@ const RegisterModal: FC<RegisterModalProps> = ({}) => {
 
   const handelError = () => {
     if (username === '') {
-      toast.error('请输入用户名');
+      toast.error('Invalid Username');
       return false;
     }
     if (email === '') {
-      toast.error('请输入邮箱');
+      toast.error('Invalid Email');
       return false;
     }
     if (password === '') {
-      toast.error('请输入密码');
+      toast.error('Invalid Password');
       return false;
     }
     if (name === '') {
-      toast.error('请输入昵称');
+      toast.error('Invalid Name');
       return false;
     }
     return true;
@@ -57,7 +57,7 @@ const RegisterModal: FC<RegisterModalProps> = ({}) => {
         email,
       });
       setIsLoading(false);
-      toast.success('注册成功');
+      toast.success('Register Succeed');
       await signIn('credentials', {
         email,
         password,
@@ -66,7 +66,7 @@ const RegisterModal: FC<RegisterModalProps> = ({}) => {
       registerStore.onClose();
     } catch (error) {
       console.log(error);
-      toast.error('注册失败');
+      toast.error('Register Failed');
     } finally {
       setIsLoading(false);
       clearInfo();
@@ -85,10 +85,10 @@ const RegisterModal: FC<RegisterModalProps> = ({}) => {
       <div className='modal'>
         <div className='modal-box'>
           <div>
-            <h3 className='font-bold text-lg text-center'>注册</h3>
+            <h3 className='font-bold text-lg text-center'>Register</h3>
             <label
               htmlFor='register-modal'
-              className='btn btn-sm btn-circle absolute right-2 top-2'
+              className='btn btn-sm btn-circle capitalize absolute right-2 top-2'
               onClick={() => {
                 clearInfo();
                 registerStore.onClose();
@@ -135,7 +135,7 @@ const RegisterModal: FC<RegisterModalProps> = ({}) => {
               value={name}
             />
             <div className='flex'>
-              <p>已经有了账号？</p>
+              <p>Already have a account? </p>
               <p
                 className='hover:cursor-pointer hover:underline'
                 onClick={() => {
@@ -144,17 +144,17 @@ const RegisterModal: FC<RegisterModalProps> = ({}) => {
                   loginStore.onOpen();
                 }}
               >
-                去登录
+                Go to login.
               </p>
             </div>
           </div>
           <div className={`modal-action`}>
             <label
               htmlFor='register-modal'
-              className='btn btn-primary'
+              className='btn btn-primary capitalize'
               onClick={onFinish}
             >
-              注册
+              Register
             </label>
           </div>
         </div>

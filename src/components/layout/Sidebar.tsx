@@ -23,26 +23,26 @@ const SideBar: FC<SideBarProps> = () => {
   const items = [
     {
       icon: BsHouseFill,
-      label: '主页',
+      label: 'Home',
       href: '/',
       auth: false,
     },
     {
       icon: BsBellFill,
-      label: '通知',
+      label: 'Notifications',
       href: '/notifications',
       auth: true,
       alert: currUser?.hasNotification,
     },
     {
       icon: FaUser,
-      label: '个人资料',
+      label: 'Profile',
       href: `/users/${!isLoading && !!currUser ? currUser.username : ''}`,
       auth: true,
     },
     {
       icon: BsXDiamondFill,
-      label: '主题',
+      label: 'Themes',
       href: '/themes',
       auth: false,
     },
@@ -115,12 +115,12 @@ const SideBar: FC<SideBarProps> = () => {
                 <p className='text-sm text-neutral-500'>@{currUser.username}</p>
               </div>
               <button
-                className='btn btn-primary btn-sm rounded-full'
+                className='btn btn-primary capitalize btn-sm rounded-full text'
                 onClick={() => {
                   signOut();
                 }}
               >
-                退出
+                Logout
               </button>
             </div>
           </div>
@@ -128,20 +128,20 @@ const SideBar: FC<SideBarProps> = () => {
       ) : (
         <>
           <button
-            className='btn btn-primary btn-xl rounded-full min-w-fit shadow-xl'
+            className='btn btn-primary capitalize btn-xl rounded-full min-w-fit shadow-xl'
             onClick={() => {
               loginStore.onOpen();
             }}
           >
-            <p className='text-base'>现在登录</p>
+            <p className='text-base'>Login Now</p>
           </button>
           <button
-            className='btn btn-primary btn-xl rounded-full min-w-fit shadow-xl'
+            className='btn btn-primary capitalize btn-xl rounded-full min-w-fit shadow-xl'
             onClick={() => {
               registerStore.onOpen();
             }}
           >
-            <p className='text-base'>现在注册</p>
+            <p className='text-base'>Register Now</p>
           </button>
         </>
       )}

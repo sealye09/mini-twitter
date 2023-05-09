@@ -39,7 +39,7 @@ const ThemesView: FC<ThemesViewProps> = ({}) => {
         {themes.map((theme) => (
           <button
             key={theme}
-            className='btn btn-primary btn-xl rounded-full min-w-fit shadow-xl'
+            className='btn btn-primary capitalize btn-xl rounded-full min-w-fit shadow-xl'
             data-set-theme={theme}
             data-act-class='ACTIVECLASS'
           >

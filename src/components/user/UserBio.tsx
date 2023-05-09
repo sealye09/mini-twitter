@@ -31,9 +31,9 @@ const UserBio: FC<UserBioProps> = ({ username }) => {
     <div className='border-b-[1px] border-neutral-800 pb-4'>
       <div className='flex justify-end p-2'>
         {currentUser?.username === username ? (
-          <button className='btn btn-secondary rounded-full'>Edit</button>
+          <button className='btn btn-secondary capitalize rounded-full'>Edit</button>
         ) : (
-          <button className='btn btn-secondary rounded-full'>Follow</button>
+          <button className='btn btn-secondary capitalize rounded-full'>Follow</button>
         )}
       </div>
       <div className='mt-8 px-4'>

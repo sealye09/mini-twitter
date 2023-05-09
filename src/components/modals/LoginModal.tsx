@@ -23,11 +23,11 @@ const LoginModal: FC<LoginModalProps> = ({}) => {
 
   const handelError = () => {
     if (email === '') {
-      toast.error('请输入邮箱');
+      toast.error('Invalid Email');
       return false;
     }
     if (password === '') {
-      toast.error('请输入密码');
+      toast.error('Invalid Password');
       return false;
     }
     return true;
@@ -42,12 +42,12 @@ const LoginModal: FC<LoginModalProps> = ({}) => {
         email,
         password,
       });
-      toast.success('登录成功');
+      toast.success('Login Succeed');
       setIsLoading(false);
       loginStore.onClose();
     } catch (error) {
       console.log(error);
-      toast.error('登录失败');
+      toast.error('Login Fail');
     } finally {
       setIsLoading(false);
       clearInfo();
@@ -65,10 +65,10 @@ const LoginModal: FC<LoginModalProps> = ({}) => {
       <div className='modal'>
         <div className='modal-box'>
           <div>
-            <h3 className='font-bold text-lg text-center'>登录</h3>
+            <h3 className='font-bold text-lg text-center'>Login</h3>
             <label
               htmlFor='login-modal'
-              className='btn btn-sm btn-circle absolute right-2 top-2'
+              className='btn btn-sm btn-circle capitalize absolute right-2 top-2'
               onClick={() => {
                 clearInfo();
                 loginStore.onClose();
@@ -99,7 +99,7 @@ const LoginModal: FC<LoginModalProps> = ({}) => {
               }}
             />
             <div className='flex'>
-              <p>还没有账号？</p>
+              <p>Don't have a account? </p>
               <p
                 className='hover:cursor-pointer hover:underline'
                 onClick={() => {
@@ -108,17 +108,17 @@ const LoginModal: FC<LoginModalProps> = ({}) => {
                   registerStore.onOpen();
                 }}
               >
-                去注册
+                Create one.
               </p>
             </div>
           </div>
           <div className='modal-action'>
             <label
               htmlFor='login-modal'
-              className='btn btn-primary'
+              className='btn btn-primary capitalize'
               onClick={onFinish}
             >
-              登录
+              Login
             </label>
           </div>
         </div>

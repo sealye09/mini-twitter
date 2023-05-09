@@ -1,6 +1,4 @@
 import { useRouter } from 'next/router';
-import { User } from '@prisma/client';
-
 import useUsers from '@/hooks/useUsers';
 import Avatar from '../Avatar';
 import { FC } from 'react';
@@ -18,7 +16,7 @@ const FollowBar: FC<FollowBarProps> = () => {
     <div className='fixed my-8 h-fit bg-base-200 shadow-xl rounded-box'>
       <div className='card'>
         <div className='card-body flex-col gap-6 justify-start'>
-          <h2 className='card-title'>推荐关注</h2>
+          <h2 className='card-title'>New Users</h2>
           {users.map((user) => (
             <div
               className='flex items-center hover:cursor-pointer'
@@ -36,13 +34,13 @@ const FollowBar: FC<FollowBarProps> = () => {
                 <p className='text-sm text-neutral-500'>@{user.username}</p>
               </div>
               <button
-                className='btn btn-primary btn-sm rounded-full'
+                className='btn btn-primary capitalize btn-sm rounded-full'
                 onClick={(event) => {
                   event.stopPropagation();
                   console.log(`Follow ${user.username}`);
                 }}
               >
-                关注
+                Follow
               </button>
             </div>
           ))}

@@ -6,7 +6,7 @@ import { authOptions } from '@/pages/api/auth/[...nextauth]';
 const serverAuth = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getServerSession(req, res, authOptions);
 
-  if (!session?.user?.email) throw new Error('暂未登录');
+  if (!session?.user?.email) throw new Error('Not Login');
 
   const currentUser = await prisma?.user.findUnique({
     where: {
@@ -14,7 +14,7 @@ const serverAuth = async (req: NextApiRequest, res: NextApiResponse) => {
     },
   });
 
-  if (!currentUser) throw new Error('暂未登录');
+  if (!currentUser) throw new Error('Not Login');
 
   return { currentUser };
 };
