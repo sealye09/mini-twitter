@@ -6,8 +6,10 @@ interface NotificationsProps {}
 const Notifications: FC<NotificationsProps> = ({}) => {
   return (
     <div className='notifications'>
-      {' '}
-      <Header label='Notifications' />
+      <Header
+        label='Notifications'
+        showBackArrow
+      />
     </div>
   );
 };

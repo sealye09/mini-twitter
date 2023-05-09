@@ -2,17 +2,14 @@ import { useRouter } from 'next/router';
 // import { ClipLoader } from 'react-spinners';
 
 import useUser from '@/hooks/useUser';
-import Header from '@/components/Header';
 
-// import PostFeed from '@/components/posts/PostFeed';
-// import Header from '@/components/Header';
-// import UserBio from '@/components/users/UserBio';
-// import UserHero from '@/components/users/UserHero';
+import Header from '@/components/Header';
+import UserHero from '@/components/user/UserHero';
+import UserBio from '@/components/user/UserBio';
 
 const UserView = () => {
   const router = useRouter();
-	const { username } = router.query;
-	
+  const { username } = router.query;
 
   const { data: fetchedUser, isLoading } = useUser(username as string);
 
@@ -33,9 +30,9 @@ const UserView = () => {
         showBackArrow
         label={fetchedUser?.name}
       />
-      {/* <UserHero userId={userId as string} />
-      <UserBio userId={userId as string} />
-      <PostFeed userId={userId as string} /> */}
+      <UserHero username={username as string} />
+      <UserBio username={username as string} />
+      {/* <PostFeed userId={userId as string} /> */}
     </>
   );
 };

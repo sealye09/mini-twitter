@@ -9,9 +9,9 @@ interface FollowBarProps {}
 
 const FollowBar: FC<FollowBarProps> = () => {
   const router = useRouter();
-  const { data, error, isLoading, mutate } = useUsers();
+  const { data: users } = useUsers();
 
-  if (!data || data.length === 0) {
+  if (!users || users.length === 0) {
     return <div className='fixed'></div>;
   }
   return (
@@ -19,7 +19,7 @@ const FollowBar: FC<FollowBarProps> = () => {
       <div className='card'>
         <div className='card-body flex-col gap-6 justify-start'>
           <h2 className='card-title'>推荐关注</h2>
-          {data.map((user: User) => (
+          {users.map((user) => (
             <div
               className='flex items-center hover:cursor-pointer'
               key={user.username}
@@ -33,7 +33,7 @@ const FollowBar: FC<FollowBarProps> = () => {
               />
               <div className='flex flex-col items-start justify-between px-4 w-full'>
                 <p className='font-semibold text-sm'>{user.name}</p>
-                <p className='text-sm text-gray-600'>@{user.username}</p>
+                <p className='text-sm text-neutral-500'>@{user.username}</p>
               </div>
               <button
                 className='btn btn-primary btn-sm rounded-full'

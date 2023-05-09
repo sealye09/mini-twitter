@@ -1,14 +1,18 @@
+@URL=http://localhost:3000/api
+@JSON=Content-Type: application/json
 
-GET http://localhost:3000/api/hello HTTP/1.1
+# 
+GET {{URL}}/hello HTTP/1.1
 
 
 
 ###
-POST http://localhost:3000/api/register HTTP/1.1
-Content-Type: application/json
+POST {{URL}}/register HTTP/1.1
+{{JSON}}
 
 {
-	"username":"yejunhai",
-	"name":"ss",
-	"password":"123"
+	"username":"bob_here",
+	"name":"Bob",
+	"password":"bob_here",
+	"email":"ye@test.com"
 }

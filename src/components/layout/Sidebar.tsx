@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react';
+import React, { FC, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import { signOut } from 'next-auth/react';
 
@@ -18,50 +18,35 @@ const SideBar: FC<SideBarProps> = () => {
   const router = useRouter();
   const registerStore = useRegisterModal();
   const loginStore = useLoginModal();
-  const { data, isLoading } = useCurrentUser();
+  const { data: currUser, isLoading } = useCurrentUser();
 
-  const items = useMemo(() => {
-    if (!!data) {
-      return [
-        {
-          icon: BsHouseFill,
-          label: '主页',
-          href: '/',
-        },
-        {
-          icon: BsBellFill,
-          label: '通知',
-          href: '/notifications',
-          auth: true,
-          alert: data?.hasNotification,
-        },
-        {
-          icon: FaUser,
-          label: '个人资料',
-          href: `/users/${!isLoading ? data.username : ''}`,
-          auth: true,
-        },
-        {
-          icon: BsXDiamondFill,
-          label: '主题',
-          href: '/themes',
-        },
-      ];
-    } else {
-      return [
-        {
-          icon: BsHouseFill,
-          label: '主页',
-          href: '/',
-        },
-        {
-          icon: BsXDiamondFill,
-          label: '主题',
-          href: '/themes',
-        },
-      ];
-    }
-  }, data);
+  const items = [
+    {
+      icon: BsHouseFill,
+      label: '主页',
+      href: '/',
+      auth: false,
+    },
+    {
+      icon: BsBellFill,
+      label: '通知',
+      href: '/notifications',
+      auth: true,
+      alert: currUser?.hasNotification,
+    },
+    {
+      icon: FaUser,
+      label: '个人资料',
+      href: `/users/${!isLoading && !!currUser ? currUser.username : ''}`,
+      auth: true,
+    },
+    {
+      icon: BsXDiamondFill,
+      label: '主题',
+      href: '/themes',
+      auth: false,
+    },
+  ];
 
   return (
     <div className='flex fixed flex-col gap-8 h-screen'>
@@ -85,11 +70,11 @@ const SideBar: FC<SideBarProps> = () => {
             label={item.label}
             icon={item.icon}
             href={item.href}
-            auth={item.auth}
+            auth={item.auth && !currUser}
           />
         ))}
       </ul>
-      {!isLoading && !!data ? (
+      {!isLoading && !!currUser ? (
         <>
           <button
             className='btn btn-primary btn-xl rounded-full min-w-fit shadow-xl flex gap-4'
@@ -106,28 +91,28 @@ const SideBar: FC<SideBarProps> = () => {
           <div
             className='mx-auto lg:hidden hover:cursor-pointer'
             onClick={() => {
-              router.push(`/users/${data.username}`);
+              router.push(`/users/${currUser.username}`);
             }}
           >
             <Avatar
               className='h-10 w-10'
-              src={data.avatarUrl}
+              src={currUser.avatarUrl}
             />
           </div>
           <div
             className='card min-w-fit h-fit bg-base-200 shadow-xl hidden lg:block lg:w-full hover:cursor-pointer'
             onClick={() => {
-              router.push(`/users/${data.username}`);
+              router.push(`/users/${currUser.username}`);
             }}
           >
             <div className='flex m-4 justify-start items-center'>
               <Avatar
                 className='h-8 w-8'
-                src={data.avatarUrl}
+                src={currUser.avatarUrl}
               />
               <div className='flex flex-col items-start justify-between px-4 w-full'>
-                <p className='font-semibold text-sm'>{data.name}</p>
-                <p className='text-sm text-gray-600'>@{data.username}</p>
+                <p className='font-semibold text-sm'>{currUser.name}</p>
+                <p className='text-sm text-neutral-500'>@{currUser.username}</p>
               </div>
               <button
                 className='btn btn-primary btn-sm rounded-full'

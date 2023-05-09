@@ -1,6 +1,6 @@
 import React, { FC, ReactNode } from 'react';
 import FollowBar from './layout/FollowBar';
-import SideBar from './layout/Sidebar';
+import SideBar from './layout/SideBar';
 
 interface LayoutProps {
   children: ReactNode | ReactNode[];

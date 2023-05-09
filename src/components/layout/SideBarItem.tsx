@@ -3,23 +3,17 @@ import { useRouter } from 'next/router';
 import { IconType } from 'react-icons';
 import { BsDot } from 'react-icons/bs';
 
-// import useLoginModal from '@/hooks/useLoginModal';
-// import useCurrentUser from '@/hooks/useCurrentUser';
-
 interface SideBarItemProps {
   label: string;
   icon: IconType;
   href?: string;
   onClick?: () => void;
-  auth?: boolean;
+  auth: boolean;
   alert?: boolean;
 }
 
 const SideBarItem: FC<SideBarItemProps> = ({ label, icon: Icon, href, onClick, auth, alert }) => {
   const router = useRouter();
-  // const loginModal = useLoginModal();
-
-  // const { data: currentUser } = useCurrentUser();
 
   const handleClick = useCallback(() => {
     if (onClick) {
@@ -28,19 +22,11 @@ const SideBarItem: FC<SideBarItemProps> = ({ label, icon: Icon, href, onClick, a
     if (href) {
       router.push(href);
     }
-    // if (auth && !currentUser) {
-    //   loginModal.onOpen();
-    // } else if (href) {
-    //   router.push(href);
-    // }
-  }, [
-    router,
-    href,
-    auth,
-    // loginModal,
-    onClick,
-    // currentUser,
-  ]);
+  }, [router, href, auth, onClick]);
+
+  if (auth) {
+    return <></>;
+  }
   return (
     <li
       onClick={handleClick}

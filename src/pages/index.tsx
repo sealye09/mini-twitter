@@ -1,19 +1,16 @@
-import { useEffect } from 'react';
+import { FC, useEffect } from 'react';
 import { Inter } from 'next/font/google';
-import { useSession } from 'next-auth/react';
 
 import useCurrentUser from '@/hooks/useCurrentUser';
 import Header from '@/components/Header';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export default function Home() {
+const Home: FC = () => {
   const { data } = useCurrentUser();
   useEffect(() => {
     console.log(data);
   }, []);
-  const session = useSession();
-  console.log(session.data);
 
   return (
     <main className={inter.className}>
@@ -22,4 +19,6 @@ export default function Home() {
       </div>
     </main>
   );
-}
+};
+
+export default Home;

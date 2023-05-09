@@ -32,6 +32,7 @@ const ThemesView: FC<ThemesViewProps> = ({}) => {
     <div className='themes'>
       <Header
         label='Themes'
+        showBackArrow
       />
 
       <div className='flex gap-2 p-4 flex-wrap'>
