@@ -11,6 +11,7 @@ import useCurrentUser from '@/hooks/useCurrentUser';
 
 import SideBarItem from './SideBarItem';
 import Avatar from '../Avatar';
+import useEditModal from '@/hooks/useEditModal';
 
 interface SideBarProps {}
 

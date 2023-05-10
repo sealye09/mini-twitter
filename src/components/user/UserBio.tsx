@@ -4,8 +4,8 @@ import { format } from 'date-fns';
 
 import useCurrentUser from '@/hooks/useCurrentUser';
 import useUser from '@/hooks/useUser';
+import useEditModal from '@/hooks/useEditModal';
 // import useFollow from '@/hooks/useFollow';
-// import useEditModal from '@/hooks/useEditModal';
 
 interface UserBioProps {
   username: string;
@@ -15,7 +15,7 @@ const UserBio: FC<UserBioProps> = ({ username }) => {
   const { data: currentUser } = useCurrentUser();
   const { data: fetchedUser } = useUser(username);
 
-  // const editModal = useEditModal();
+  const editModal = useEditModal();
 
   // const { isFollowing, toggleFollow } = useFollow(username);
 
@@ -31,7 +31,14 @@ const UserBio: FC<UserBioProps> = ({ username }) => {
     <div className='border-b-[1px] border-neutral-800 pb-4'>
       <div className='flex justify-end p-2'>
         {currentUser?.username === username ? (
-          <button className='btn btn-secondary capitalize rounded-full'>Edit</button>
+          <button
+            className='btn btn-secondary capitalize rounded-full'
+            onClick={() => {
+              editModal.onOpen();
+            }}
+          >
+            Edit
+          </button>
         ) : (
           <button className='btn btn-secondary capitalize rounded-full'>Follow</button>
         )}
