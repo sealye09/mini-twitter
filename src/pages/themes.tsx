@@ -49,7 +49,7 @@ const ThemesView: FC<ThemesViewProps> = ({}) => {
             {darkThemes.map((theme) => (
               <button
                 key={theme}
-                className='btn capitalize rounded-full min-w-fit shadow-xl'
+                className='btn btn-secondary capitalize rounded-full min-w-fit shadow-xl'
                 data-set-theme={theme}
                 data-act-class='ACTIVECLASS'
               >
@@ -64,7 +64,7 @@ const ThemesView: FC<ThemesViewProps> = ({}) => {
             {lightThemes.map((theme) => (
               <button
                 key={theme}
-                className='btn capitalize rounded-full min-w-fit shadow-xl'
+                className='btn btn-secondary capitalize rounded-full min-w-fit shadow-xl'
                 data-set-theme={theme}
                 data-act-class='ACTIVECLASS'
               >

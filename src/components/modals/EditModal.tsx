@@ -1,11 +1,13 @@
-import React, { FC, useCallback, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useRef, useState } from 'react';
 import { toast } from 'react-hot-toast';
+import Image from 'next/image';
 
 import useEditModal from '@/hooks/useEditModal';
 import Modal from './Modal';
 import useCurrentUser from '@/hooks/useCurrentUser';
 import useUser from '@/hooks/useUser';
 import axios from 'axios';
+import ImageUpload from '../ImageUpload';
 
 interface EditModalProps {}
 
@@ -17,7 +19,7 @@ const EditModal: FC<EditModalProps> = ({}) => {
   const [name, setName] = useState('');
   const [username, setUsername] = useState('');
   const [avatarUrl, setAvatarUrl] = useState('');
-  const [coverUrl, setCoverUrl] = useState('');
+  const [coverImageUrl, setCoverImageUrl] = useState('');
   const [bio, setBio] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
@@ -38,8 +40,10 @@ const EditModal: FC<EditModalProps> = ({}) => {
       setIsLoading(true);
       if (!handelError()) throw new Error();
 
+      console.log(avatarUrl.split(','));
+
       // request
-      axios.patch('/api/users/edit', { name, username, bio, avatarUrl, coverUrl });
+      axios.patch('/api/users/edit', { name, username, bio, avatarUrl, coverImageUrl });
       mutateFetchedUser();
 
       toast.success('Updated Succeed');
@@ -51,11 +55,11 @@ const EditModal: FC<EditModalProps> = ({}) => {
     } finally {
       setIsLoading(false);
     }
-  }, [name, username, bio, avatarUrl, coverUrl, editStore]);
+  }, [name, username, bio, avatarUrl, coverImageUrl, editStore]);
 
   useEffect(() => {
     setAvatarUrl(currentUser?.avatarUrl as string);
-    setCoverUrl(currentUser?.coverImageUrl as string);
+    setCoverImageUrl(currentUser?.coverImageUrl as string);
     setName(currentUser?.name as string);
     setUsername(currentUser?.username as string);
     setBio(currentUser?.bio as string);
@@ -63,34 +67,46 @@ const EditModal: FC<EditModalProps> = ({}) => {
 
   const body = (
     <div className='flex flex-col justify-center content-center items-center gap-6 w-full pt-10'>
-      <div className='flex min-w-fit w-5/6 justify-between'>
-        <label className='label'>
-          <span className='label-text'>Avatar</span>
-        </label>
-        <input
-          type='file'
-          disabled={isLoading}
-          value={avatarUrl}
-          onChange={(e) => {
-            setAvatarUrl(e.target.value);
-          }}
-          className='file-input file-input-bordered file-input-primary max-w-xs'
-        />
-      </div>
-      <div className='flex min-w-fit w-5/6 justify-between'>
-        <label className='label'>
-          <span className='label-text'>Cover</span>
-        </label>
-        <input
-          type='file'
-          disabled={isLoading}
-          value={coverUrl}
-          onChange={(e) => {
-            setCoverUrl(e.target.value);
-          }}
-          className='file-input file-input-bordered file-input-primary max-w-xs'
-        />
-      </div>
+      <ImageUpload
+        value={avatarUrl}
+        disabled={isLoading}
+        onChange={(image) => {
+          setAvatarUrl(image);
+        }}
+        label='avatar'
+      />
+      {avatarUrl ? (
+        <div className='w-full h-40 flex justify-center'>
+          <Image
+            src={avatarUrl}
+            alt={'avatar'}
+            height={160}
+            width={160}
+          />
+        </div>
+      ) : (
+        <div className='w-full h-40'></div>
+      )}
+      <ImageUpload
+        value={coverImageUrl}
+        disabled={isLoading}
+        onChange={(image) => {
+          setCoverImageUrl(image);
+        }}
+        label='cover'
+      />
+      {avatarUrl ? (
+        <div className='w-full h-40 flex justify-center'>
+          <Image
+            src={coverImageUrl}
+            alt={'cover'}
+            height={160}
+            width={160}
+          />
+        </div>
+      ) : (
+        <div className='w-full h-40'></div>
+      )}
       <input
         disabled={isLoading}
         type='text'
