@@ -14,6 +14,8 @@ const Avatar: FC<AvatartProps> = ({ className, src }) => {
       <Image
         className={`rounded-full bg-primary ${className}`}
         src={!!src ? src : DefaultAvatar}
+        width={100}
+        height={100}
         alt={'avatar image'}
       />
     </>

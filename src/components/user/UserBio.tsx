@@ -49,7 +49,7 @@ const UserBio: FC<UserBioProps> = ({ username }) => {
           <p className='text-md text-neutral-500'>@{fetchedUser?.username}</p>
         </div>
         <div className='flex flex-col mt-4'>
-          <p className='text-white'>{fetchedUser?.bio}</p>
+          <p className=''>{fetchedUser?.bio}</p>
           <div className='flex flex-row items-center gap-2 mt-4 text-neutral-500'>
             <BiCalendar size={24} />
             <p>Joined {createdAt}</p>
