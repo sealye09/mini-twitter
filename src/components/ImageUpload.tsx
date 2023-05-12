@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState } from "react";
 
 interface ImageUploadProps {
   onChange: (base64: string) => void;
@@ -7,7 +7,12 @@ interface ImageUploadProps {
   disabled?: boolean;
 }
 
-const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, label, value, disabled }) => {
+const ImageUpload: React.FC<ImageUploadProps> = ({
+  onChange,
+  label,
+  value,
+  disabled,
+}) => {
   const [base64, setBase64] = useState(value);
 
   const handleChange = useCallback(
@@ -31,16 +36,16 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, label, value, disab
   );
 
   return (
-    <div className='flex min-w-fit w-5/6 justify-between'>
-      <label className='label'>
-        <span className='label-text'>{label}</span>
+    <div className="flex min-w-fit w-5/6 justify-between">
+      <label className="label">
+        <span className="label-text">{label}</span>
       </label>
       <input
-        type='file'
-        accept='.jpg, .jpeg, .png'
+        type="file"
+        accept=".jpg, .jpeg, .png"
         disabled={disabled}
         onChange={(e) => handleFile(e.target.files!)}
-        className='file-input file-input-bordered file-input-secondary max-w-xs'
+        className="file-input file-input-bordered file-input-secondary max-w-xs"
       />
     </div>
   );

@@ -1,7 +1,7 @@
-import React, { FC, useCallback } from 'react';
-import { useRouter } from 'next/router';
-import { IconType } from 'react-icons';
-import { BsDot } from 'react-icons/bs';
+import React, { FC, useCallback } from "react";
+import { useRouter } from "next/router";
+import { IconType } from "react-icons";
+import { BsDot } from "react-icons/bs";
 
 interface SideBarItemProps {
   label: string;
@@ -12,7 +12,14 @@ interface SideBarItemProps {
   alert?: boolean;
 }
 
-const SideBarItem: FC<SideBarItemProps> = ({ label, icon: Icon, href, onClick, auth, alert }) => {
+const SideBarItem: FC<SideBarItemProps> = ({
+  label,
+  icon: Icon,
+  href,
+  onClick,
+  auth,
+  alert,
+}) => {
   const router = useRouter();
 
   const handleClick = useCallback(() => {
@@ -30,17 +37,17 @@ const SideBarItem: FC<SideBarItemProps> = ({ label, icon: Icon, href, onClick, a
   return (
     <li
       onClick={handleClick}
-      className='flex items-start rounded-full w-full min-w-fit'
+      className="flex items-start rounded-full w-full min-w-fit"
     >
-      <div className='relative rounded-full h-14 w-14 flex items-center justify-center lg:hidden'>
+      <div className="relative rounded-full h-14 w-14 flex items-center justify-center lg:hidden">
         <Icon size={28} />
       </div>
-      <div className='relative hidden lg:flex gap-4 p-4 rounded-full items-center'>
+      <div className="relative hidden lg:flex gap-4 p-4 rounded-full items-center">
         <Icon size={24} />
-        {label !== '' && <p className='hidden lg:block text-xl'>{label}</p>}
+        {label !== "" && <p className="hidden lg:block text-xl">{label}</p>}
         {alert ? (
           <BsDot
-            className='absolute -top-4 left-0'
+            className="absolute -top-4 left-0"
             size={70}
           />
         ) : null}

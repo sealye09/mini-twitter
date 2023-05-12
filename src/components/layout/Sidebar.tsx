@@ -1,17 +1,21 @@
-import React, { FC, useEffect, useMemo } from 'react';
-import { useRouter } from 'next/router';
-import { signOut } from 'next-auth/react';
+import React, { FC, useEffect, useMemo } from "react";
+import { useRouter } from "next/router";
+import { signOut } from "next-auth/react";
 
-import { BsBellFill, BsXDiamondFill, BsHouseFill, BsTwitter } from 'react-icons/bs';
-import { FaFeather, FaUser } from 'react-icons/fa';
+import {
+  BsBellFill,
+  BsXDiamondFill,
+  BsHouseFill,
+  BsTwitter,
+} from "react-icons/bs";
+import { FaFeather, FaUser } from "react-icons/fa";
 
-import useLoginModal from '@/hooks/useLoginModal';
-import useRegisterModal from '@/hooks/useRegisterModal';
-import useCurrentUser from '@/hooks/useCurrentUser';
+import useLoginModal from "@/hooks/useLoginModal";
+import useRegisterModal from "@/hooks/useRegisterModal";
+import useCurrentUser from "@/hooks/useCurrentUser";
 
-import SideBarItem from './SideBarItem';
-import Avatar from '../Avatar';
-import useEditModal from '@/hooks/useEditModal';
+import SideBarItem from "./SideBarItem";
+import Avatar from "../Avatar";
 
 interface SideBarProps {}
 
@@ -24,44 +28,44 @@ const SideBar: FC<SideBarProps> = () => {
   const items = [
     {
       icon: BsHouseFill,
-      label: 'Home',
-      href: '/',
+      label: "Home",
+      href: "/",
       auth: false,
     },
     {
       icon: BsBellFill,
-      label: 'Notifications',
-      href: '/notifications',
+      label: "Notifications",
+      href: "/notifications",
       auth: true,
       alert: currUser?.hasNotification,
     },
     {
       icon: FaUser,
-      label: 'Profile',
-      href: `/users/${!isLoading && !!currUser ? currUser.username : ''}`,
+      label: "Profile",
+      href: `/users/${!isLoading && !!currUser ? currUser.id : ""}`,
       auth: true,
     },
     {
       icon: BsXDiamondFill,
-      label: 'Themes',
-      href: '/themes',
+      label: "Themes",
+      href: "/themes",
       auth: false,
     },
   ];
 
   return (
-    <div className='flex fixed flex-col gap-8 h-screen'>
-      <ul className='menu w-full'>
+    <div className="flex fixed flex-col gap-8 h-screen">
+      <ul className="menu w-full">
         <li
           onClick={() => {
-            router.push('/');
+            router.push("/");
           }}
-          className='items-start rounded-full'
+          className="items-start rounded-full"
         >
-          <div className='relative rounded-full h-14 w-14 flex items-start justify-center lg:hidden'>
+          <div className="relative rounded-full h-14 w-14 flex items-start justify-center lg:hidden">
             <BsTwitter size={28} />
           </div>
-          <div className='relative hidden lg:flex rounded-full items-center gap-4 p-4'>
+          <div className="relative hidden lg:flex rounded-full items-center gap-4 p-4">
             <BsTwitter size={24} />
           </div>
         </li>
@@ -78,45 +82,45 @@ const SideBar: FC<SideBarProps> = () => {
       {!isLoading && !!currUser ? (
         <>
           <button
-            className='btn btn-primary btn-xl rounded-full min-w-fit shadow-xl flex gap-4'
+            className="btn btn-primary btn-xl rounded-full min-w-fit shadow-xl flex gap-4"
             onClick={() => {
-              console.log('twitter');
+              console.log("twitter");
             }}
           >
             <FaFeather
               size={24}
-              className='block lg:hidden'
+              className="block lg:hidden"
             />
-            <p className='text-base hidden lg:block'>Tweet</p>
+            <p className="text-base hidden lg:block">Tweet</p>
           </button>
           <div
-            className='mx-auto lg:hidden hover:cursor-pointer'
+            className="mx-auto lg:hidden hover:cursor-pointer"
             onClick={() => {
-              router.push(`/users/${currUser.username}`);
+              router.push(`/users/${currUser.id}`);
             }}
           >
             <Avatar
-              className='h-10 w-10'
+              className="h-10 w-10"
               src={currUser.avatarUrl}
             />
           </div>
           <div
-            className='card min-w-fit h-fit bg-base-200 shadow-xl hidden lg:block lg:w-full hover:cursor-pointer'
+            className="card min-w-fit h-fit bg-base-200 shadow-xl hidden lg:block lg:w-full hover:cursor-pointer"
             onClick={() => {
-              router.push(`/users/${currUser.username}`);
+              router.push(`/users/${currUser.id}`);
             }}
           >
-            <div className='flex m-4 justify-start items-center'>
+            <div className="flex m-4 justify-start items-center">
               <Avatar
-                className='h-8 w-8'
+                className="h-8 w-8"
                 src={currUser.avatarUrl}
               />
-              <div className='flex flex-col items-start justify-between px-4 w-full'>
-                <p className='font-semibold text-sm'>{currUser.name}</p>
-                <p className='text-sm text-neutral-500'>@{currUser.username}</p>
+              <div className="flex flex-col items-start justify-between px-4 w-full">
+                <p className="font-semibold text-sm">{currUser.name}</p>
+                <p className="text-sm text-neutral-500">@{currUser.username}</p>
               </div>
               <button
-                className='btn btn-primary capitalize btn-sm rounded-full text'
+                className="btn btn-primary capitalize btn-sm rounded-full text"
                 onClick={() => {
                   signOut();
                 }}
@@ -129,20 +133,20 @@ const SideBar: FC<SideBarProps> = () => {
       ) : (
         <>
           <button
-            className='btn btn-primary capitalize btn-xl rounded-full min-w-fit shadow-xl'
+            className="btn btn-primary capitalize btn-xl rounded-full min-w-fit shadow-xl"
             onClick={() => {
               loginStore.onOpen();
             }}
           >
-            <p className='text-base'>Login Now</p>
+            <p className="text-base">Login Now</p>
           </button>
           <button
-            className='btn btn-primary capitalize btn-xl rounded-full min-w-fit shadow-xl'
+            className="btn btn-primary capitalize btn-xl rounded-full min-w-fit shadow-xl"
             onClick={() => {
               registerStore.onOpen();
             }}
           >
-            <p className='text-base'>Register Now</p>
+            <p className="text-base">Register Now</p>
           </button>
         </>
       )}

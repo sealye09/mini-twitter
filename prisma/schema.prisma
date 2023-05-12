@@ -23,6 +23,7 @@ model User {
   createdAt       DateTime       @default(now()) @map("created_at")
   updatedAt       DateTime       @updatedAt @map("updated_at")
   followingIds    String[]       @map("following_ids") @db.ObjectId
+  followerIds     String[]       @map("follower_ids") @db.ObjectId
   hasNotification Boolean?       @map("has_notification")
   posts           Post[]
   comments        Comment[]

@@ -1,31 +1,31 @@
-import { FC } from 'react';
-import Image from 'next/image';
+import { FC } from "react";
+import Image from "next/image";
 
-import useUser from '@/hooks/useUser';
+import useUser from "@/hooks/useUser";
 
-import Avatar from '../Avatar';
+import Avatar from "../Avatar";
 
 interface UserHeroProps {
-  username: string;
+  userId: string;
 }
 
-const UserHero: FC<UserHeroProps> = ({ username }) => {
-  const { data: fetchedUser } = useUser(username);
+const UserHero: FC<UserHeroProps> = ({ userId }) => {
+  const { data: fetchedUser } = useUser(userId);
 
   return (
     <div>
-      <div className='bg-base-200 h-44 relative'>
+      <div className="bg-base-200 h-44 relative">
         {fetchedUser && fetchedUser?.coverImageUrl && (
           <Image
             src={fetchedUser.coverImageUrl}
             fill
-            alt='Cover Image'
-            style={{ objectFit: 'cover' }}
+            alt="Cover Image"
+            style={{ objectFit: "cover" }}
           />
         )}
-        <div className='absolute -bottom-16 left-4'>
+        <div className="absolute -bottom-16 left-4">
           <Avatar
-            className='w-32 h-32'
+            className="w-32 h-32"
             src={fetchedUser?.avatarUrl}
           />
         </div>

@@ -1,10 +1,13 @@
-import useSWR from 'swr';
-import { User } from '@prisma/client';
+import useSWR from "swr";
+import { User } from "@prisma/client";
 
-import fetcher from '@/libs/fetcher';
+import fetcher from "@/libs/fetcher";
 
-const useUser = (username: string) => {
-  const { data, error, isLoading, mutate } = useSWR<User>(username ? `/api/users/${username}` : null, fetcher);
+const useUser = (userId: string) => {
+  const { data, error, isLoading, mutate } = useSWR<User>(
+    userId ? `/api/users/${userId}` : null,
+    fetcher,
+  );
 
   return {
     data,

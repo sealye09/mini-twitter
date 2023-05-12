@@ -1,4 +1,4 @@
-import React, { FC, ReactNode, useCallback } from 'react';
+import React, { FC, ReactNode, useCallback } from "react";
 
 interface ModalProps {
   title?: string;
@@ -12,7 +12,17 @@ interface ModalProps {
   onSubmit: () => void;
 }
 
-const Modal: FC<ModalProps> = ({ isOpen, id, onClose, onSubmit, title, body, actionLabel, footer, disabled }) => {
+const Modal: FC<ModalProps> = ({
+  isOpen,
+  id,
+  onClose,
+  onSubmit,
+  title,
+  body,
+  actionLabel,
+  footer,
+  disabled,
+}) => {
   const handleClose = useCallback(() => {
     if (disabled) {
       return;
@@ -35,20 +45,20 @@ const Modal: FC<ModalProps> = ({ isOpen, id, onClose, onSubmit, title, body, act
   return (
     <div>
       <input
-        type='checkbox'
+        type="checkbox"
         id={`${id}-modal`}
-        className='modal-toggle'
+        className="modal-toggle"
         checked={isOpen}
         onChange={() => {}}
       />
-      <div className='modal'>
-        <div className='modal-box'>
+      <div className="modal">
+        <div className="modal-box">
           {/* title */}
           <div>
-            <h3 className='font-bold text-lg text-center'>{title}</h3>
+            <h3 className="font-bold text-lg text-center">{title}</h3>
             <label
-              htmlFor='register-modal'
-              className='btn btn-secondary btn-sm btn-circle capitalize absolute right-2 top-2'
+              htmlFor="register-modal"
+              className="btn btn-secondary btn-sm btn-circle capitalize absolute right-2 top-2"
               onClick={handleClose}
             >
               ✕
@@ -61,8 +71,8 @@ const Modal: FC<ModalProps> = ({ isOpen, id, onClose, onSubmit, title, body, act
           </div>
           <div className={`modal-action`}>
             <label
-              htmlFor='register-modal'
-              className='btn btn-primary capitalize rounded-full'
+              htmlFor="register-modal"
+              className="btn btn-primary capitalize rounded-full"
               onClick={handleSubmit}
             >
               {actionLabel}
