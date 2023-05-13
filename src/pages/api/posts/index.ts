@@ -14,10 +14,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const { userId } = req.query;
       let posts;
       // user's posts
-      if (!!userId && typeof userId === "string") {
+      if (userId && typeof userId === "string") {
         posts = await prisma.post.findMany({
           where: {
-            id: userId,
+            userId: userId,
           },
           include: {
             user: true,
@@ -40,6 +40,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       }
       return res.status(200).json(posts);
     }
+
     // create post
     if (req.method === "POST") {
       const { currentUser } = await serverAuth(req, res);

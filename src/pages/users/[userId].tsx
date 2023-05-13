@@ -1,7 +1,5 @@
 import { useRouter } from "next/router";
 // import { ClipLoader } from 'react-spinners';
-
-import { PostFeed as PostType } from "@/types";
 import useUser from "@/hooks/useUser";
 import usePosts from "@/hooks/usePosts";
 
@@ -36,8 +34,7 @@ const UserView = () => {
       />
       <UserHero userId={userId as string} />
       <UserBio userId={userId as string} />
-      <h1>jjs</h1>
-      <PostFeed posts={posts as PostType[]} />
+      <PostFeed posts={posts} />
     </div>
   );
 };

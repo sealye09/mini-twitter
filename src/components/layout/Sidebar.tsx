@@ -85,7 +85,7 @@ const SideBar: FC<SideBarProps> = () => {
           >
             <FaFeather
               size={24}
-              className="block lg:hidden text-primary"
+              className="block lg:hidden text-slate-100"
             />
             <p className="text-base hidden lg:block">Tweet</p>
           </button>

@@ -5,7 +5,6 @@ import Header from "@/components/Header";
 import PostCreator from "@/components/posts/PostCreator";
 import PostFeed from "@/components/posts/PostFeed";
 import usePosts from "@/hooks/usePosts";
-import { PostFeed as PostType } from "@/types";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +15,7 @@ const Home: FC = () => {
       <div>
         <Header label="Home" />
         <PostCreator placeholder="What's happening?" />
-        <PostFeed posts={posts as PostType[]} />
+        <PostFeed posts={posts} />
       </div>
     </main>
   );

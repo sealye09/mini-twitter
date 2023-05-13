@@ -1,11 +1,11 @@
 import useSWR from "swr";
 
 import fetcher from "@/libs/fetcher";
-import { Post } from "@prisma/client";
+import { PostFeed } from "@/types";
 
 const usePosts = (userId?: string) => {
   const url = userId ? `/api/posts?userId=${userId}` : "/api/posts";
-  const { data, error, isLoading, mutate } = useSWR<Post[]>(url, fetcher);
+  const { data, error, isLoading, mutate } = useSWR<PostFeed[]>(url, fetcher);
 
   return {
     data,

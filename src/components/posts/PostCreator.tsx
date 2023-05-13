@@ -42,7 +42,7 @@ const PostCreator: FC<PostCreatorProps> = ({ postId, placeholder, isComment }) =
   return (
     <div className="w-full bg-base-100 flex flex-col justify-center">
       <textarea
-        className="textarea resize-none w-full text-[20px] focus:outline-none"
+        className="textarea resize-none w-full text-[20px] focus:outline-none rounded-none"
         disabled={isLoading}
         placeholder={placeholder}
         value={content}
@@ -51,7 +51,7 @@ const PostCreator: FC<PostCreatorProps> = ({ postId, placeholder, isComment }) =
       <div className="mt-2 flex flex-row justify-end w-full border-b-[1px] border-base-300 pr-4">
         <button
           disabled={isLoading}
-          className="btn btn-primary mb-2 capitalize"
+          className="btn btn-primary mb-2 capitalize rounded-full"
           onClick={onSubmit}
         >
           Tweet

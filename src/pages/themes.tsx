@@ -1,21 +1,10 @@
-import React, { FC, useEffect, useState } from 'react';
-import { themeChange } from 'theme-change';
+import React, { FC, useEffect, useState } from "react";
+import { themeChange } from "theme-change";
 
-import Header from '@/components/Header';
+import Header from "@/components/Header";
 
-const darkThemes = ['dark', 'business', 'coffee', 'night', 'halloween'];
-const lightThemes = [
-  'light',
-  'cupcake',
-  'bumblebee',
-  'emerald',
-  'corporate',
-  'fantasy',
-  'cmyk',
-  'autumn',
-  'lemonade',
-  'winter',
-];
+const darkThemes = ["dark", "business", "coffee", "night", "halloween"];
+const lightThemes = ["light", "cupcake", "bumblebee", "fantasy", "autumn"];
 
 interface ThemesViewProps {}
 
@@ -26,47 +15,47 @@ const ThemesView: FC<ThemesViewProps> = ({}) => {
   }, []);
   const [changeWithSystem, setChangeWithSystem] = useState(false);
   return (
-    <div className='themes min-h-screen'>
+    <div className="themes min-h-screen">
       <Header
-        label='Themes'
+        label="Themes"
         showBackArrow
       />
-      <div className='p-4 flex flex-col justify-start items-start gap-4'>
+      <div className="p-4 flex flex-col justify-start items-start gap-4">
         <div>
-          <label className='label cursor-pointer p-0 flex gap-2'>
-            <span className='label-text'>Change with system</span>
+          <label className="label cursor-pointer p-0 flex gap-2">
+            <span className="label-text">Change with system</span>
             <input
-              type='checkbox'
-              className='toggle toggle-primary rounded-full'
+              type="checkbox"
+              className="toggle toggle-primary rounded-full"
               checked={changeWithSystem}
               onClick={() => setChangeWithSystem(!changeWithSystem)}
             />
           </label>
         </div>
-        <div className='flex flex-col gap-1'>
+        <div className="flex flex-col gap-1">
           <h2>Dark Themes</h2>
-          <div className='flex flex-wrap gap-2'>
+          <div className="flex flex-wrap gap-2">
             {darkThemes.map((theme) => (
               <button
                 key={theme}
-                className='btn btn-secondary capitalize rounded-full min-w-fit shadow-xl'
+                className="btn btn-secondary capitalize rounded-full min-w-fit shadow-xl"
                 data-set-theme={theme}
-                data-act-class='ACTIVECLASS'
+                data-act-class="ACTIVECLASS"
               >
                 {theme}
               </button>
             ))}
           </div>
         </div>
-        <div className='flex flex-col gap-1'>
+        <div className="flex flex-col gap-1">
           <h2>Light Themes</h2>
-          <div className='flex flex-wrap gap-2'>
+          <div className="flex flex-wrap gap-2">
             {lightThemes.map((theme) => (
               <button
                 key={theme}
-                className='btn btn-secondary capitalize rounded-full min-w-fit shadow-xl'
+                className="btn btn-secondary capitalize rounded-full min-w-fit shadow-xl"
                 data-set-theme={theme}
-                data-act-class='ACTIVECLASS'
+                data-act-class="ACTIVECLASS"
               >
                 {theme}
               </button>
