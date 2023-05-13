@@ -4,7 +4,7 @@ import { SessionProvider } from "next-auth/react";
 import { themeChange } from "theme-change";
 import { Toaster } from "react-hot-toast";
 
-import Layout from "@/components/Layout";
+import Layout from "@/components/layout/Layout";
 import LoginModal from "@/components/modals/LoginModal";
 import RegisterModal from "@/components/modals/RegisterModal";
 

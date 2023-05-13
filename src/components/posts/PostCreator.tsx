@@ -1,7 +1,9 @@
 import useCurrentUser from "@/hooks/useCurrentUser";
 import usePost from "@/hooks/usePost";
 import usePosts from "@/hooks/usePosts";
-import React, { FC, useState } from "react";
+import axios from "axios";
+import React, { FC, useCallback, useState } from "react";
+import toast from "react-hot-toast";
 
 interface PostCreatorProps {
   placeholder: string;
@@ -17,6 +19,25 @@ const PostCreator: FC<PostCreatorProps> = ({ postId, placeholder, isComment }) =
   const { mutate: mutatePosts } = usePosts();
   const { mutate: mutatePost } = usePost(postId as string);
 
+  const onSubmit = useCallback(async () => {
+    try {
+      setIsLoading(true);
+
+      const url = isComment ? `/api/comments?postId=${postId}` : "/api/posts";
+
+      await axios.post(url, { content });
+
+      toast.success("Tweet created");
+      setContent("");
+      mutatePosts();
+      mutatePost();
+    } catch (error) {
+      toast.error("Something went wrong");
+    } finally {
+      setIsLoading(false);
+    }
+  }, [content, mutatePosts, isComment, postId, mutatePost]);
+
   return (
     <div className="w-full bg-base-100 flex flex-col justify-center">
       <textarea
@@ -30,9 +51,7 @@ const PostCreator: FC<PostCreatorProps> = ({ postId, placeholder, isComment }) =
         <button
           disabled={isLoading}
           className="btn btn-primary mb-2"
-          onClick={() => {
-            console.log("Tweet");
-          }}
+          onClick={onSubmit}
         >
           Tweet
         </button>

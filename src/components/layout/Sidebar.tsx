@@ -10,7 +10,7 @@ import useRegisterModal from "@/hooks/useRegisterModal";
 import useCurrentUser from "@/hooks/useCurrentUser";
 
 import SideBarItem from "./SideBarItem";
-import Avatar from "../Avatar";
+import Avatar from "../user/Avatar";
 
 interface SideBarProps {}
 

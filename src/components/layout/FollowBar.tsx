@@ -3,7 +3,7 @@ import { FC } from "react";
 
 import useUsers from "@/hooks/useUsers";
 import useCurrentUser from "@/hooks/useCurrentUser";
-import Avatar from "../Avatar";
+import Avatar from "../user/Avatar";
 import useFollow from "@/hooks/useFollow";
 import FollowBarItem from "./FollowBarItem";
 
