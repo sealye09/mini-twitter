@@ -1,7 +1,6 @@
 import React, { FC, useCallback } from "react";
 import { useRouter } from "next/router";
 import { IconType } from "react-icons";
-import { BsDot } from "react-icons/bs";
 
 interface SideBarItemProps {
   label: string;
@@ -12,14 +11,7 @@ interface SideBarItemProps {
   alert?: boolean;
 }
 
-const SideBarItem: FC<SideBarItemProps> = ({
-  label,
-  icon: Icon,
-  href,
-  onClick,
-  auth,
-  alert,
-}) => {
+const SideBarItem: FC<SideBarItemProps> = ({ label, icon: Icon, href, onClick, auth, alert }) => {
   const router = useRouter();
 
   const handleClick = useCallback(() => {
@@ -42,15 +34,12 @@ const SideBarItem: FC<SideBarItemProps> = ({
       <div className="relative rounded-full h-14 w-14 flex items-center justify-center lg:hidden">
         <Icon size={28} />
       </div>
-      <div className="relative hidden lg:flex gap-4 p-4 rounded-full items-center">
-        <Icon size={24} />
+      <div className={"relative hidden lg:flex gap-4 p-4 rounded-full items-center"}>
+        <Icon
+          size={24}
+          className={`${alert && "text-primary"}`}
+        />
         {label !== "" && <p className="hidden lg:block text-xl">{label}</p>}
-        {alert ? (
-          <BsDot
-            className="absolute -top-4 left-0"
-            size={70}
-          />
-        ) : null}
       </div>
     </li>
   );

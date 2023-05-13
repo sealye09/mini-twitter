@@ -11,7 +11,7 @@ interface EditModalProps {}
 
 const EditModal: FC<EditModalProps> = ({}) => {
   const { data: currentUser } = useCurrentUser();
-  const { mutate: mutateFetchedUser } = useUser(currentUser?.id as string);
+  const { mutate: mutateFetchedUser } = useUser(currentUser?.id);
   const editStore = useEditModal();
 
   const [name, setName] = useState("");

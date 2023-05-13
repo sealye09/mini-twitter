@@ -18,7 +18,7 @@ const FollowBarItem: FC<FollowBarItemProps> = ({
   username,
 }) => {
   const router = useRouter();
-  const { isFollowing, toggleFollow } = useFollow(userId as string);
+  const { isFollowing, toggleFollow } = useFollow(userId);
 
   return (
     <div

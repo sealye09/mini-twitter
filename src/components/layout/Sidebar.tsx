@@ -2,12 +2,7 @@ import React, { FC, useEffect, useMemo } from "react";
 import { useRouter } from "next/router";
 import { signOut } from "next-auth/react";
 
-import {
-  BsBellFill,
-  BsXDiamondFill,
-  BsHouseFill,
-  BsTwitter,
-} from "react-icons/bs";
+import { BsBellFill, BsXDiamondFill, BsHouseFill, BsTwitter } from "react-icons/bs";
 import { FaFeather, FaUser } from "react-icons/fa";
 
 import useLoginModal from "@/hooks/useLoginModal";
@@ -37,7 +32,7 @@ const SideBar: FC<SideBarProps> = () => {
       label: "Notifications",
       href: "/notifications",
       auth: true,
-      alert: currUser?.hasNotification,
+      alert: !!currUser?.hasNotification,
     },
     {
       icon: FaUser,
@@ -62,11 +57,11 @@ const SideBar: FC<SideBarProps> = () => {
           }}
           className="items-start rounded-full"
         >
-          <div className="relative rounded-full h-14 w-14 flex items-start justify-center lg:hidden">
-            <BsTwitter size={28} />
+          <div className="relative rounded-full h-14 w-14 flex items-start justify-center lg:hidden text-primary">
+            <BsTwitter size={28}/>
           </div>
-          <div className="relative hidden lg:flex rounded-full items-center gap-4 p-4">
-            <BsTwitter size={24} />
+          <div className="relative hidden lg:flex rounded-full items-center gap-4 p-4 text-primary">
+            <BsTwitter size={24}/>
           </div>
         </li>
         {items.map((item) => (
@@ -76,6 +71,7 @@ const SideBar: FC<SideBarProps> = () => {
             icon={item.icon}
             href={item.href}
             auth={item.auth && !currUser}
+            alert={item.alert}
           />
         ))}
       </ul>
@@ -89,7 +85,7 @@ const SideBar: FC<SideBarProps> = () => {
           >
             <FaFeather
               size={24}
-              className="block lg:hidden"
+              className="block lg:hidden text-primary"
             />
             <p className="text-base hidden lg:block">Tweet</p>
           </button>

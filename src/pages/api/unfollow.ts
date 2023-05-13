@@ -30,31 +30,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     let updatedFollowingIds = [...(currentUser.followingIds || [])];
 
     if (req.method === "POST") {
-      updatedFollowingIds.push(user.id);
-      updatedFollowerIds.push(user.id);
-      // NOTIFICATION PART START
-      try {
-        await prisma.notification.create({
-          data: {
-            content: "Someone followed you!",
-            userId,
-          },
-        });
-
-        await prisma.user.update({
-          where: {
-            id: userId,
-          },
-          data: {
-            hasNotification: true,
-          },
-        });
-      } catch (error) {
-        console.log(error);
-      }
-      // NOTIFICATION PART END
+      updatedFollowingIds = updatedFollowingIds.filter((followingId) => followingId !== user.id);
+      updatedFollowerIds = updatedFollowerIds.filter((followerId) => followerId !== user.id);
     }
-
     await prisma.user.update({
       where: {
         id: userId,

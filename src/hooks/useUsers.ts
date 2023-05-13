@@ -4,10 +4,7 @@ import { User } from "@prisma/client";
 import fetcher from "@/libs/fetcher";
 
 const useUsers = () => {
-  const { data, error, isLoading, mutate } = useSWR<User[]>(
-    "/api/users",
-    fetcher,
-  );
+  const { data, error, isLoading, mutate } = useSWR<User[]>("/api/users", fetcher);
 
   return {
     data,

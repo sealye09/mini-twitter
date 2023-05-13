@@ -1,3 +1,3 @@
 ### twitter clone app
 
-next.js daisyUI
+next.js daisyUI TailwindCss prisma
