@@ -1,3 +1,11 @@
-### twitter clone app
+# twitter clone app
 
-next.js daisyUI TailwindCss prisma
+## tech stack
+
+next.js daisyUI TailwindCss prisma swr zustand
+
+## TODO
+
+- Comment Feed
+- Add Comment
+- Support image post

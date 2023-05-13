@@ -33,14 +33,12 @@ const PostItem: React.FC<PostItemProps> = ({ post }) => {
   }, [router, post.id]);
 
   const onLike = useCallback(
-    async (ev: any) => {
-      ev.stopPropagation();
-
+    async (event: any) => {
+      event.stopPropagation();
       if (!currentUser) {
         toast.error("Not Login");
         return;
       }
-
       toggleLike();
     },
     [currentUser, toggleLike],
@@ -119,11 +117,13 @@ const PostItem: React.FC<PostItemProps> = ({ post }) => {
             >
               <div className="group-hover:bg-red-200 p-2 rounded-full">
                 <LikeIcon
-                  color={hasLiked ? "red" : ""}
+                  className={`${hasLiked ? "text-red-500" : ""}`}
                   size={20}
                 />
               </div>
-              <p>{post.likedIds.length === 0 ? null : post.likedIds.length}</p>
+              <p className={`${hasLiked ? "text-red-500" : ""}`}>
+                {post.likedIds.length === 0 ? null : post.likedIds.length}
+              </p>
             </div>
           </div>
         </div>

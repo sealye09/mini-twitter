@@ -6,7 +6,6 @@ import useCurrentUser from "@/hooks/useCurrentUser";
 import useUser from "@/hooks/useUser";
 import useEditModal from "@/hooks/useEditModal";
 import useFollow from "@/hooks/useFollow";
-// import useFollow from '@/hooks/useFollow';
 
 interface UserBioProps {
   userId: string;

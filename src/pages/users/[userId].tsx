@@ -1,5 +1,4 @@
 import { useRouter } from "next/router";
-// import { ClipLoader } from 'react-spinners';
 import useUser from "@/hooks/useUser";
 import usePosts from "@/hooks/usePosts";
 
@@ -7,6 +6,7 @@ import Header from "@/components/Header";
 import UserHero from "@/components/user/UserHero";
 import UserBio from "@/components/user/UserBio";
 import PostFeed from "@/components/posts/PostFeed";
+import Loader from "@/components/Loader";
 
 const UserView = () => {
   const router = useRouter();
@@ -17,11 +17,8 @@ const UserView = () => {
 
   if (isLoading || !fetchedUser) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        {/* <ClipLoader
-          color='lightblue'
-          size={80}
-        /> */}
+      <div className="min-h-screen">
+        <Loader />
       </div>
     );
   }

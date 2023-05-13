@@ -5,12 +5,11 @@ import PostItem from "./PostItem";
 
 interface PostFeedProps {
   posts: PostFeed[];
-  more?: boolean;
 }
 
-const PostFeed: FC<PostFeedProps> = ({ posts, more }) => {
+const PostFeed: FC<PostFeedProps> = ({ posts }) => {
   return (
-    <div>
+    <div className='w-full'>
       {posts.map((post) => (
         <PostItem post={post} />
       ))}

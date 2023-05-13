@@ -23,11 +23,10 @@ const useLike = ({ postId, userId }: { postId: string; userId?: string }) => {
 
     try {
       let request;
-
       if (hasLiked) {
-        request = () => axios.post("/api/cancel_like", { postId });
+        request = () => axios.post("/api/posts/cancel_like", { postId });
       } else {
-        request = () => axios.post("/api/like", { postId });
+        request = () => axios.post("/api/posts/like", { postId });
       }
 
       await request();
@@ -36,6 +35,7 @@ const useLike = ({ postId, userId }: { postId: string; userId?: string }) => {
 
       toast.success("Success");
     } catch (error) {
+      console.log(error);
       toast.error("Something went wrong");
     }
   }, [currentUser, hasLiked, postId, mutateFetchedPosts, mutateFetchedPost]);

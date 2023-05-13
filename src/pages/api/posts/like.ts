@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
+import serverAuth from "@/libs/serverAuth";
 import prisma from "@/libs/prismadb";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
@@ -8,6 +9,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     const { postId } = req.body;
+    const { currentUser } = await serverAuth(req, res);
+
     if (!postId || typeof postId !== "string") {
       throw new Error("Invalid PostID");
     }
@@ -20,7 +23,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
 
     let updatedLikedIds = [...(post.likedIds || [])];
-    updatedLikedIds.push(post.id);
+    updatedLikedIds.push(currentUser.id);
 
     const updatedPost = await prisma.post.update({
       where: {
