@@ -12,7 +12,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       throw new Error("Invalid PostID");
     }
     const post = await prisma.post.findUnique({
-      where: { id: postId },
+      where: {
+        id: postId,
+      },
+      include: {
+        user: true,
+        comments: {
+          include: {
+            user: true,
+          },
+          orderBy: {
+            createdAt: "desc",
+          },
+        },
+      },
     });
 
     return res.status(200).json(post);

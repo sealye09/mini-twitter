@@ -22,6 +22,7 @@ const PostCreator: FC<PostCreatorProps> = ({ postId, placeholder, isComment }) =
   const onSubmit = useCallback(async () => {
     try {
       setIsLoading(true);
+      if (content === "") throw new Error();
 
       const url = isComment ? `/api/comments?postId=${postId}` : "/api/posts";
 
@@ -47,10 +48,10 @@ const PostCreator: FC<PostCreatorProps> = ({ postId, placeholder, isComment }) =
         value={content}
         onChange={(e) => setContent(e.target.value)}
       ></textarea>
-      <div className="mt-2 flex flex-row justify-end w-full border-b-2 pr-4">
+      <div className="mt-2 flex flex-row justify-end w-full border-b-[1px] border-base-300 pr-4">
         <button
           disabled={isLoading}
-          className="btn btn-primary mb-2"
+          className="btn btn-primary mb-2 capitalize"
           onClick={onSubmit}
         >
           Tweet

@@ -26,7 +26,7 @@ const ThemesView: FC<ThemesViewProps> = ({}) => {
   }, []);
   const [changeWithSystem, setChangeWithSystem] = useState(false);
   return (
-    <div className='themes'>
+    <div className='themes min-h-screen'>
       <Header
         label='Themes'
         showBackArrow

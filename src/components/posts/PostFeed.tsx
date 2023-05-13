@@ -1,9 +1,20 @@
 import React, { FC } from "react";
+import { PostFeed } from "@/types";
 
-interface PostFeedProps {}
+import PostItem from "./PostItem";
 
-const PostFeed: FC<PostFeedProps> = ({}) => {
-  return <div>PostFeed</div>;
+interface PostFeedProps {
+  posts: PostFeed[];
+}
+
+const PostFeed: FC<PostFeedProps> = ({ posts }) => {
+  return (
+    <div>
+      {posts.map((post) => (
+        <PostItem post={post} />
+      ))}
+    </div>
+  );
 };
 
 export default PostFeed;

@@ -3,18 +3,23 @@ import { Inter } from "next/font/google";
 
 import Header from "@/components/Header";
 import PostCreator from "@/components/posts/PostCreator";
-import PostFeed from '@/components/posts/PostFeed';
+import PostFeed from "@/components/posts/PostFeed";
+import usePosts from "@/hooks/usePosts";
+import { PostFeed as PostType } from "@/types";
 
 const inter = Inter({ subsets: ["latin"] });
 
-const Home: FC = () => (
-  <main className={inter.className}>
-    <div>
-      <Header label="Home" />
-      <PostCreator placeholder="What's happening?" />
-      <PostFeed />
-    </div>
-  </main>
-);
+const Home: FC = () => {
+  const { data: posts = [] } = usePosts();
+  return (
+    <main className={`min-h-screen ${inter.className}`}>
+      <div>
+        <Header label="Home" />
+        <PostCreator placeholder="What's happening?" />
+        <PostFeed posts={posts as PostType[]} />
+      </div>
+    </main>
+  );
+};
 
 export default Home;

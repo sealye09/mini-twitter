@@ -1,10 +1,6 @@
-import { useRouter } from "next/router";
 import { FC } from "react";
 
 import useUsers from "@/hooks/useUsers";
-import useCurrentUser from "@/hooks/useCurrentUser";
-import Avatar from "../user/Avatar";
-import useFollow from "@/hooks/useFollow";
 import FollowBarItem from "./FollowBarItem";
 
 interface FollowBarProps {}

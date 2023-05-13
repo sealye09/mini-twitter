@@ -1,110 +1,102 @@
-import { useRouter } from "next/router";
 import { useCallback, useMemo } from "react";
-import { AiFillHeart, AiOutlineHeart, AiOutlineMessage } from "react-icons/ai";
+import { useRouter } from "next/router";
 import { formatDistanceToNowStrict } from "date-fns";
+import { toast } from "react-hot-toast";
+import { AiFillHeart, AiOutlineHeart, AiOutlineMessage } from "react-icons/ai";
 
-import useLoginModal from "@/hooks/useLoginModal";
+import { PostFeed } from "@/types";
 import useCurrentUser from "@/hooks/useCurrentUser";
 import useLike from "@/hooks/useLike";
 import Avatar from "../user/Avatar";
 
 interface PostItemProps {
-  data: Record<string, any>;
-  userId?: string;
+  post: PostFeed;
 }
 
-const PostItem: React.FC<PostItemProps> = ({ data = {}, userId }) => {
+const PostItem: React.FC<PostItemProps> = ({ post }) => {
   const router = useRouter();
-  const loginModal = useLoginModal();
 
   const { data: currentUser } = useCurrentUser();
-  const { hasLiked, toggleLike } = useLike({ postId: data.id, userId });
+  const { hasLiked, toggleLike } = useLike({ postId: post.id, userId: currentUser?.id });
 
   const goToUser = useCallback(
-    (ev: any) => {
-      ev.stopPropagation();
-      router.push(`/users/${data.user.id}`);
+    (event: any) => {
+      event.stopPropagation();
+      router.push(`/users/${currentUser?.id}`);
     },
-    [router, data.user.id],
+    [router, currentUser?.id],
   );
 
   const goToPost = useCallback(() => {
-    router.push(`/posts/${data.id}`);
-  }, [router, data.id]);
+    router.push(`/posts/${post.id}`);
+  }, [router, post.id]);
 
   const onLike = useCallback(
     async (ev: any) => {
       ev.stopPropagation();
 
       if (!currentUser) {
-        return loginModal.onOpen();
+        toast.error("Not Login");
+        return;
       }
 
       toggleLike();
     },
-    [loginModal, currentUser, toggleLike],
+    [currentUser, toggleLike],
   );
 
   const LikeIcon = hasLiked ? AiFillHeart : AiOutlineHeart;
 
   const createdAt = useMemo(() => {
-    if (!data?.createdAt) {
+    if (!post.createdAt) {
       return null;
     }
-
-    return formatDistanceToNowStrict(new Date(data.createdAt));
-  }, [data.createdAt]);
+    return formatDistanceToNowStrict(new Date(post.createdAt));
+  }, [post.createdAt]);
 
   return (
     <div
       onClick={goToPost}
-      className="border-b-[1px] border-neutral-800 p-5 cursor-pointer hover:bg-neutral-900 transition"
+      className="border-b-[1px] border-base-300 p-5 cursor-pointer hover:bg-base-300 transition"
     >
       <div className="flex flex-row items-start gap-3">
-        <Avatar
-          className={""}
-          src={undefined}
-        />
+        <div onClick={goToUser}>
+          <Avatar
+            className="w-12 h-12"
+            src={post.user.avatarUrl}
+          />
+        </div>
         <div>
           <div className="flex flex-row items-center gap-2">
             <p
               onClick={goToUser}
-              className="text-white font-semibold cursor-pointer hover:underline"
+              className="font-semibold cursor-pointer hover:underline"
             >
-              {data.user.name}
+              {post.user.name}
             </p>
             <span
               onClick={goToUser}
               className="text-neutral-500 cursor-pointer hover:underline hidden md:block"
             >
-              @{data.user.username}
+              @{post.user.username}
             </span>
-            <span className="text-neutral-500 text-sm">{createdAt}</span>
+            <span className="text-neutral-500 text-sm"> {createdAt} ago</span>
           </div>
-          <div className="text-white mt-1">{data.body}</div>
+          <div className="mt-1">{post.content}</div>
           <div className="flex flex-row items-center mt-3 gap-10">
             <div className="flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-sky-500">
               <AiOutlineMessage size={20} />
-              <p>{data.comments?.length || 0}</p>
+              <p>{post.comments.length}</p>
             </div>
             <div
               onClick={onLike}
-              className="
-                flex 
-                flex-row 
-                items-center 
-                text-neutral-500 
-                gap-2 
-                cursor-pointer 
-                transition 
-                hover:text-red-500
-            "
+              className="flex flex-row items-center text-neutral-500 gap-2 cursor-pointer transition hover:text-red-500"
             >
               <LikeIcon
                 color={hasLiked ? "red" : ""}
                 size={20}
               />
-              <p>{data.likedIds.length}</p>
+              <p>{post.likedIds.length}</p>
             </div>
           </div>
         </div>

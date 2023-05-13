@@ -18,7 +18,7 @@ const Notifications: FC<NotificationsProps> = ({}) => {
   }, [mutateCurrentUser]);
 
   return (
-    <div className="notifications">
+    <div className="notifications min-h-screen">
       <Header
         label="Notifications"
         showBackArrow
