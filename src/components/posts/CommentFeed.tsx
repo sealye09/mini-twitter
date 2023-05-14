@@ -1,20 +1,21 @@
 import React, { FC } from "react";
-import PostCreator from "./PostCreator";
-import Feed from "./Feed";
+import { CommentFeed } from "@/types";
 
-interface CommentFeedProps {}
+import Comment from "./Comment";
 
-const CommentFeed: FC<CommentFeedProps> = ({}) => {
+interface CommentFeedProps {
+  comments: CommentFeed[];
+}
+
+const CommentFeed: FC<CommentFeedProps> = ({ comments }) => {
   return (
     <div className="w-full h-full">
-      <PostCreator
-        placeholder="Your reply..."
-        isComment
-      />
-      <Feed
-        feedData={[]}
-        isComment
-      />
+      {comments.map((comment) => (
+        <Comment
+          key={comment.id}
+          comment={comment}
+        />
+      ))}
     </div>
   );
 };

@@ -5,7 +5,7 @@ import usePosts from "@/hooks/usePosts";
 import Header from "@/components/Header";
 import UserHero from "@/components/user/UserHero";
 import UserBio from "@/components/user/UserBio";
-import Feed from "@/components/posts/Feed";
+import PostFeed from "@/components/posts/PostFeed";
 import Loader from "@/components/Loader";
 
 const UserView = () => {
@@ -31,7 +31,7 @@ const UserView = () => {
       />
       <UserHero userId={userId as string} />
       <UserBio userId={userId as string} />
-      <Feed feedData={posts} />
+      <PostFeed posts={posts} />
     </div>
   );
 };

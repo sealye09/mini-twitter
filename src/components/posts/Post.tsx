@@ -10,11 +10,11 @@ import useCurrentUser from "@/hooks/useCurrentUser";
 import useLike from "@/hooks/useLike";
 import Avatar from "../user/Avatar";
 
-interface FeedItemProps {
+interface PostProps {
   post: PostFeed;
 }
 
-const FeedItem: React.FC<FeedItemProps> = ({ post }) => {
+const Post: React.FC<PostProps> = ({ post }) => {
   const router = useRouter();
 
   const { data: currentUser } = useCurrentUser();
@@ -133,4 +133,4 @@ const FeedItem: React.FC<FeedItemProps> = ({ post }) => {
   );
 };
 
-export default FeedItem;
+export default Post;

@@ -1,4 +1,4 @@
-import { Post, User } from "@prisma/client";
+import { Comment, Post, User } from "@prisma/client";
 
 export type PostFeed = Post & {
   user: User;
@@ -12,4 +12,9 @@ type CommentWithUser = Comment & {
 export type PostDetail = Post & {
   user: User;
   comments: CommentWithUser[];
+};
+
+export type CommentFeed = Comment & {
+  user: User;
+  post: Post;
 };

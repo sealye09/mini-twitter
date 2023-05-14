@@ -30,7 +30,7 @@ const SideBar: FC<SideBarProps> = () => {
     {
       icon: BsBellFill,
       label: "Notifications",
-      href: "/notifications",
+      href: `/users/notifications`,
       auth: true,
       alert: !!currUser?.hasNotification,
     },
@@ -58,10 +58,10 @@ const SideBar: FC<SideBarProps> = () => {
           className="items-start rounded-full"
         >
           <div className="relative rounded-full h-14 w-14 flex items-start justify-center lg:hidden text-primary">
-            <BsTwitter size={28}/>
+            <BsTwitter size={28} />
           </div>
           <div className="relative hidden lg:flex rounded-full items-center gap-4 p-4 text-primary">
-            <BsTwitter size={24}/>
+            <BsTwitter size={24} />
           </div>
         </li>
         {items.map((item) => (
@@ -81,6 +81,7 @@ const SideBar: FC<SideBarProps> = () => {
             className="btn btn-primary btn-xl flex justify-center rounded-full min-w-fit shadow-xl gap-4"
             onClick={() => {
               console.log("twitter");
+              router.push("/");
             }}
           >
             <FaFeather

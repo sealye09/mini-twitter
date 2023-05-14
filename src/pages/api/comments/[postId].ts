@@ -10,7 +10,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   try {
     const { postId } = req.query;
-    if (!postId || typeof postId !== "string") {
+
+    if (!postId || typeof postId !== "string" || postId === "undefined") {
       throw new Error("Invalid PostID");
     }
     // get comments
@@ -54,7 +55,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         if (post?.userId) {
           await prisma.notification.create({
             data: {
-              content: "Someone replied on your tweet!",
+              content: `${currentUser.username} replied on your tweet!`,
               userId: post.userId,
             },
           });

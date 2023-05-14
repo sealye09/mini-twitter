@@ -1,4 +1,3 @@
-import useCurrentUser from "@/hooks/useCurrentUser";
 import usePost from "@/hooks/usePost";
 import usePosts from "@/hooks/usePosts";
 import axios from "axios";
@@ -14,8 +13,6 @@ interface PostCreatorProps {
 const PostCreator: FC<PostCreatorProps> = ({ postId, placeholder, isComment }) => {
   const [content, setContent] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
-  const { data: currentUser } = useCurrentUser();
   const { mutate: mutatePosts } = usePosts();
   const { mutate: mutatePost } = usePost(postId as string);
 
@@ -24,7 +21,7 @@ const PostCreator: FC<PostCreatorProps> = ({ postId, placeholder, isComment }) =
       setIsLoading(true);
       if (content === "") throw new Error();
 
-      const url = isComment ? `/api/comments?postId=${postId}` : "/api/posts";
+      const url = isComment ? `/api/comments/${postId}` : "/api/posts";
 
       await axios.post(url, { content });
 
@@ -42,7 +39,7 @@ const PostCreator: FC<PostCreatorProps> = ({ postId, placeholder, isComment }) =
   return (
     <div className="w-full bg-base-100 flex flex-col justify-center">
       <textarea
-        className="textarea resize-none w-full text-[20px] focus:outline-none rounded-none"
+        className="textarea resize-none w-full text-[20px] focus:outline-none rounded-none placeholder:text-neutral-500"
         disabled={isLoading}
         placeholder={placeholder}
         value={content}
