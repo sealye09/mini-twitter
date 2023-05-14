@@ -10,11 +10,11 @@ import useCurrentUser from "@/hooks/useCurrentUser";
 import useLike from "@/hooks/useLike";
 import Avatar from "../user/Avatar";
 
-interface PostItemProps {
+interface FeedItemProps {
   post: PostFeed;
 }
 
-const PostItem: React.FC<PostItemProps> = ({ post }) => {
+const FeedItem: React.FC<FeedItemProps> = ({ post }) => {
   const router = useRouter();
 
   const { data: currentUser } = useCurrentUser();
@@ -56,11 +56,11 @@ const PostItem: React.FC<PostItemProps> = ({ post }) => {
   return (
     <div
       onClick={goToPost}
-      className="w-full border-b-[1px] border-base-300 p-4 hover:bg-base-200 transition cursor-pointer"
+      className="border-b-[1px] border-base-300 p-4 hover:bg-base-200 transition cursor-pointer"
     >
       <div className="flex flex-row items-start gap-4 w-full">
         <div
-          className="min-w-fit"
+          className="min-w-fit w-12 h-12"
           onClick={goToUser}
         >
           <Avatar
@@ -68,6 +68,7 @@ const PostItem: React.FC<PostItemProps> = ({ post }) => {
             src={post.user.avatarUrl}
           />
         </div>
+
         <div className="flex flex-col w-full gap-2">
           <div className="flex">
             <div className="flex justify-between w-full">
@@ -132,4 +133,4 @@ const PostItem: React.FC<PostItemProps> = ({ post }) => {
   );
 };
 
-export default PostItem;
+export default FeedItem;

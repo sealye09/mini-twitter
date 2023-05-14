@@ -78,7 +78,7 @@ const SideBar: FC<SideBarProps> = () => {
       {!isLoading && !!currUser ? (
         <>
           <button
-            className="btn btn-primary btn-xl rounded-full min-w-fit shadow-xl flex gap-4"
+            className="btn btn-primary btn-xl flex justify-center rounded-full min-w-fit shadow-xl gap-4"
             onClick={() => {
               console.log("twitter");
             }}

@@ -1,25 +1,19 @@
 import { FC } from "react";
-import { Inter } from "next/font/google";
-import { ClipLoader } from "react-spinners";
 
 import Header from "@/components/Header";
 import PostCreator from "@/components/posts/PostCreator";
-import PostFeed from "@/components/posts/PostFeed";
+import Feed from "@/components/posts/Feed";
 import usePosts from "@/hooks/usePosts";
 import Loader from "@/components/Loader";
-
-const inter = Inter({ subsets: ["latin"] });
 
 const Home: FC = () => {
   const { data: posts = [], isLoading } = usePosts();
 
   return (
-    <main className={`min-h-screen ${inter.className}`}>
-      <div>
-        <Header label="Home" />
-        <PostCreator placeholder="What's happening?" />
-        {!posts || isLoading ? <Loader /> : <PostFeed posts={posts} />}
-      </div>
+    <main className="home min-h-screen">
+      <Header label="Home" />
+      <PostCreator placeholder="What's happening?" />
+      {!posts || isLoading ? <Loader /> : <Feed feedData={posts} />}
     </main>
   );
 };

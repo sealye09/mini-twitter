@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import serverAuth from "@/libs/serverAuth";
 import prisma from "@/libs/prismadb";
+import format from "date-fns/format";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== "POST") {
@@ -24,6 +25,29 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     let updatedLikedIds = [...(post.likedIds || [])];
     updatedLikedIds.push(currentUser.id);
+
+    try {
+      await prisma.notification.create({
+        data: {
+          content: `${currentUser.username} likes your post created at ${format(
+            new Date(post.createdAt),
+            "MMMM dd, yyyy",
+          )}!`,
+          userId: post.userId,
+        },
+      });
+
+      await prisma.user.update({
+        where: {
+          id: post.userId,
+        },
+        data: {
+          hasNotification: true,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
 
     const updatedPost = await prisma.post.update({
       where: {

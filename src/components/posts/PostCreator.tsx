@@ -54,7 +54,7 @@ const PostCreator: FC<PostCreatorProps> = ({ postId, placeholder, isComment }) =
           className="btn btn-primary mb-2 capitalize rounded-full"
           onClick={onSubmit}
         >
-          Tweet
+          {isComment ? "Reply" : "Tweet"}
         </button>
       </div>
     </div>

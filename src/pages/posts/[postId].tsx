@@ -3,9 +3,10 @@ import { useRouter } from "next/router";
 import usePost from "@/hooks/usePost";
 import { PostFeed as PostType } from "@/types";
 import Header from "@/components/Header";
-import PostItem from "@/components/posts/PostItem";
-import PostFeed from "@/components/posts/PostFeed";
+import FeedItem from "@/components/posts/FeedItem";
+import Feed from "@/components/posts/Feed";
 import Loader from "@/components/Loader";
+import CommentFeed from "@/components/posts/CommentFeed";
 
 const PostView = () => {
   const router = useRouter();
@@ -27,9 +28,9 @@ const PostView = () => {
         showBackArrow
         label="Tweet"
       />
-      <PostItem post={fetchedPost as PostType} />
-      <PostFeed posts={[]} />
-      {/* <CommentFeed comments={fetchedPost?.comments} /> */}
+      <FeedItem post={fetchedPost as PostType} />
+      <Feed feedData={[]} />
+      <CommentFeed />
     </div>
   );
 };
