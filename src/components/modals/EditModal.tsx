@@ -21,19 +21,18 @@ const EditModal: FC<EditModalProps> = ({}) => {
   const [bio, setBio] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const handelError = () => {
-    if (name === "") {
-      toast.error("Invalid Email");
-      return false;
-    }
-    if (username === "") {
-      toast.error("Invalid Password");
-      return false;
-    }
-    return true;
-  };
-
   const onFinish = useCallback(async () => {
+    const handelError = () => {
+      if (name === "") {
+        toast.error("Invalid Email");
+        return false;
+      }
+      if (username === "") {
+        toast.error("Invalid Password");
+        return false;
+      }
+      return true;
+    };
     try {
       setIsLoading(true);
       if (!handelError()) throw new Error();
@@ -59,7 +58,7 @@ const EditModal: FC<EditModalProps> = ({}) => {
     } finally {
       setIsLoading(false);
     }
-  }, [name, username, bio, avatarUrl, coverImageUrl, editStore]);
+  }, [name, username, bio, avatarUrl, coverImageUrl, editStore, mutateFetchedUser]);
 
   useEffect(() => {
     setAvatarUrl(currentUser?.avatarUrl as string);

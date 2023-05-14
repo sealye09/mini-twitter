@@ -21,18 +21,6 @@ const LoginModal: FC<LoginModalProps> = ({}) => {
     setPassword("");
   };
 
-  const handelError = () => {
-    if (email === "") {
-      toast.error("Invalid Email");
-      return false;
-    }
-    if (password === "") {
-      toast.error("Invalid Password");
-      return false;
-    }
-    return true;
-  };
-
   const body = (
     <div className="flex flex-col justify-center content-center items-center gap-6 w-full pt-10">
       <input
@@ -60,7 +48,7 @@ const LoginModal: FC<LoginModalProps> = ({}) => {
 
   const footer = (
     <div className="flex justify-center gap-2 pt-8">
-      <p>Don't have a account? </p>
+      <p>Do not have a account? </p>
       <p
         className="hover:cursor-pointer hover:underline"
         onClick={() => {
@@ -75,6 +63,17 @@ const LoginModal: FC<LoginModalProps> = ({}) => {
   );
 
   const onFinish = useCallback(async () => {
+    const handelError = () => {
+      if (email === "") {
+        toast.error("Invalid Email");
+        return false;
+      }
+      if (password === "") {
+        toast.error("Invalid Password");
+        return false;
+      }
+      return true;
+    };
     try {
       setIsLoading(true);
       if (!handelError()) throw new Error();

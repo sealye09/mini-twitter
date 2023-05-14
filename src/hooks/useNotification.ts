@@ -18,7 +18,7 @@ const useNotification = () => {
       await axios.patch("/api/users/read_notifications", { userId: currentUser.id });
       mutateCurrentUser();
     }
-  }, [currentUser]);
+  }, [currentUser, mutateCurrentUser]);
 
   return {
     data,

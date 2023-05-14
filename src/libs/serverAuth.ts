@@ -1,20 +1,21 @@
-import { getServerSession } from 'next-auth';
-import { NextApiRequest, NextApiResponse } from 'next';
+import { getServerSession } from "next-auth";
+import { NextApiRequest, NextApiResponse } from "next";
+import prisma from "@/libs/prismadb";
 
-import { authOptions } from '@/pages/api/auth/[...nextauth]';
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
 
 const serverAuth = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = await getServerSession(req, res, authOptions);
 
-  if (!session?.user?.email) throw new Error('Not Login');
+  if (!session?.user?.email) throw new Error("Not Login");
 
-  const currentUser = await prisma?.user.findUnique({
+  const currentUser = await prisma.user.findUnique({
     where: {
       email: session.user.email,
     },
   });
 
-  if (!currentUser) throw new Error('Not Login');
+  if (!currentUser) throw new Error("Not Login");
 
   return { currentUser };
 };

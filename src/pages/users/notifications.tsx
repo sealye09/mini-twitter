@@ -26,6 +26,7 @@ const Notifications: FC<NotificationsProps> = ({}) => {
         ) : (
           notifications.map((notification) => (
             <NotificationCard
+              key={notification.id}
               id={notification.id}
               content={notification.content}
               createdAt={notification.createdAt}

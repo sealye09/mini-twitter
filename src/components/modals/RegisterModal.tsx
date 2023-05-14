@@ -27,27 +27,26 @@ const RegisterModal: FC<RegisterModalProps> = ({}) => {
     setEmail("");
   };
 
-  const handelError = () => {
-    if (username === "") {
-      toast.error("Invalid Username");
-      return false;
-    }
-    if (email === "") {
-      toast.error("Invalid Email");
-      return false;
-    }
-    if (password === "") {
-      toast.error("Invalid Password");
-      return false;
-    }
-    if (name === "") {
-      toast.error("Invalid Name");
-      return false;
-    }
-    return true;
-  };
-
   const onFinish = useCallback(async () => {
+    const handelError = () => {
+      if (username === "") {
+        toast.error("Invalid Username");
+        return false;
+      }
+      if (email === "") {
+        toast.error("Invalid Email");
+        return false;
+      }
+      if (password === "") {
+        toast.error("Invalid Password");
+        return false;
+      }
+      if (name === "") {
+        toast.error("Invalid Name");
+        return false;
+      }
+      return true;
+    };
     try {
       setIsLoading(true);
       if (!handelError()) throw new Error();

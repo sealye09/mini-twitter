@@ -21,7 +21,7 @@ const SideBarItem: FC<SideBarItemProps> = ({ label, icon: Icon, href, onClick, a
     if (href) {
       router.push(href);
     }
-  }, [router, href, auth, onClick]);
+  }, [router, href, onClick]);
 
   if (auth) {
     return <></>;
