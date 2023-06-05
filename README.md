@@ -1,11 +1,17 @@
 # twitter clone app
 
-## tech stack
+a twitter-like app
 
-next.js daisyUI TailwindCss prisma swr zustand
+## Tech
 
-## TODO
+next.js daisyUI TailwindCss prisma swr zustand Mongodb
 
-- Comment Feed
+## Features
+
+- Register and Login
+- Post Actions(CRUD)
+- Comment and Feed
 - Add Comment
-- Support image post
+- Follow
+- Notification
+- Theme Change
