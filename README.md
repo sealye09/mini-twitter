@@ -4,7 +4,7 @@ a twitter-like app
 
 ## Tech
 
-next.js daisyUI TailwindCss prisma swr zustand Mongodb
+next.js daisyUI TailwindCss Mongodb prisma swr zustand 
 
 ## Features
 
