@@ -1,10 +1,9 @@
-import React, { FC, useEffect, useId } from "react";
+import React, { FC } from "react";
 
 import useNotification from "@/hooks/useNotification";
 import Header from "@/components/Header";
 import NotificationCard from "@/components/NotificationCard";
 import Loader from "@/components/Loader";
-import { useRouter } from "next/router";
 
 interface NotificationsProps {}
 
