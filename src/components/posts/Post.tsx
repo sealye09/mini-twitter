@@ -23,7 +23,7 @@ const Post: React.FC<PostProps> = ({ post }) => {
   const goToUser = useCallback(
     (event: any) => {
       event.stopPropagation();
-      router.push(`/users/${currentUser?.id}`);
+      router.push(`/users/${post.userId}`);
     },
     [router, currentUser?.id],
   );
