@@ -1,13 +1,31 @@
-import React, { FC } from "react";
-import { CommentFeed, PostFeed as PostFeed, PostDetail } from "@/types";
+import { useRouter } from "next/router";
+
+import usePosts from "@/hooks/fetcher/usePosts";
+import { useScrollEnd } from "@/hooks/useScrollEnd";
+import Loader from "@/components/Loader";
 
 import Post from "./Post";
+import { useEffect } from "react";
 
-interface PostFeedProps {
-  posts: PostFeed[];
-}
+const PostFeed = () => {
+  const router = useRouter();
+  const page = Number(router.query.page) || 0;
+  const limit = Number(router.query.limit) || 10;
+  const userId = (router.query.userId as string) || "";
 
-const PostFeed: FC<PostFeedProps> = ({ posts }) => {
+  const { data: posts = [], isLoading } = usePosts({ userId, page, limit });
+  const isBottom = useScrollEnd();
+
+  useEffect(() => {
+    if (isBottom) {
+      router.push({ pathname: "/", query: { page: page + 1, limit, userId } });
+    }
+  }, [isBottom]);
+
+  if (!posts || isLoading) {
+    return <Loader />;
+  }
+
   return (
     <div className="w-full">
       {posts.map((post) => (
@@ -16,6 +34,7 @@ const PostFeed: FC<PostFeedProps> = ({ posts }) => {
           post={post}
         />
       ))}
+      {isBottom && <Loader />}
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 
-import useNotification from "@/hooks/useNotification";
+import useNotification from "@/hooks/fetcher/useNotification";
 import Header from "@/components/Header";
 import NotificationCard from "@/components/NotificationCard";
 import Loader from "@/components/Loader";

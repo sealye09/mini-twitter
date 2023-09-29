@@ -1,6 +1,5 @@
 import { useRouter } from "next/router";
-import useUser from "@/hooks/useUser";
-import usePosts from "@/hooks/usePosts";
+import useUser from "@/hooks/fetcher/useUser";
 
 import Header from "@/components/Header";
 import UserHero from "@/components/user/UserHero";
@@ -13,7 +12,6 @@ const UserView = () => {
   const { userId } = router.query;
 
   const { data: fetchedUser, isLoading } = useUser(userId as string);
-  const { data: posts = [] } = usePosts(userId as string);
 
   if (isLoading || !fetchedUser) {
     return (
@@ -31,7 +29,7 @@ const UserView = () => {
       />
       <UserHero userId={userId as string} />
       <UserBio userId={userId as string} />
-      <PostFeed posts={posts} />
+      <PostFeed />
     </div>
   );
 };

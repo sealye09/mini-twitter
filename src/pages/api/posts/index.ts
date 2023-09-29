@@ -11,7 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   try {
     // get posts
     if (req.method === "GET") {
-      const { userId } = req.query;
+      const { userId, page = 1, limit = 10 } = req.query;
       let posts;
       // user's posts
       if (userId && typeof userId === "string") {
@@ -26,6 +26,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           orderBy: {
             createdAt: "desc",
           },
+          skip: Number(page) * Number(limit),
+          take: Number(limit),
         });
       } else {
         posts = await prisma.post.findMany({
@@ -36,6 +38,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           orderBy: {
             createdAt: "desc",
           },
+          skip: Number(page) * Number(limit),
+          take: Number(limit),
         });
       }
       return res.status(200).json(posts);

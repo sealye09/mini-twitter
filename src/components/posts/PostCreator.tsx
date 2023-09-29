@@ -1,5 +1,5 @@
-import usePost from "@/hooks/usePost";
-import usePosts from "@/hooks/usePosts";
+import usePost from "@/hooks/fetcher/usePost";
+import usePosts from "@/hooks/fetcher/usePosts";
 import axios from "axios";
 import React, { FC, useCallback, useState } from "react";
 import toast from "react-hot-toast";
@@ -13,7 +13,7 @@ interface PostCreatorProps {
 const PostCreator: FC<PostCreatorProps> = ({ postId, placeholder, isComment }) => {
   const [content, setContent] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const { mutate: mutatePosts } = usePosts();
+  const { mutate: mutatePosts } = usePosts({});
   const { mutate: mutatePost } = usePost(postId as string);
 
   const onSubmit = useCallback(async () => {

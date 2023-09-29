@@ -5,12 +5,12 @@ import { signOut } from "next-auth/react";
 import { BsBellFill, BsXDiamondFill, BsHouseFill, BsTwitter } from "react-icons/bs";
 import { FaFeather, FaUser } from "react-icons/fa";
 
-import useLoginModal from "@/hooks/useLoginModal";
-import useRegisterModal from "@/hooks/useRegisterModal";
-import useCurrentUser from "@/hooks/useCurrentUser";
+import useLoginModal from "@/hooks/modals/useLoginModal";
+import useRegisterModal from "@/hooks/modals/useRegisterModal";
+import useCurrentUser from "@/hooks/fetcher/useCurrentUser";
 
 import SideBarItem from "./SideBarItem";
-import Avatar from "../user/Avatar";
+import Avatar from "@/components/user/Avatar";
 
 interface SideBarProps {}
 

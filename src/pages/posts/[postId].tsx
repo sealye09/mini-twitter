@@ -1,11 +1,11 @@
 import { useRouter } from "next/router";
 
-import usePost from "@/hooks/usePost";
+import usePost from "@/hooks/fetcher/usePost";
 import Header from "@/components/Header";
 import Post from "@/components/posts/Post";
 import Loader from "@/components/Loader";
 import CommentFeed from "@/components/posts/CommentFeed";
-import useComments from "@/hooks/useComments";
+import useComments from "@/hooks/fetcher/useComments";
 import PostCreator from "@/components/posts/PostCreator";
 
 const PostView = () => {

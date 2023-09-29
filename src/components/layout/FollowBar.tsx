@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import useUsers from "@/hooks/useUsers";
+import useUsers from "@/hooks/fetcher/useUsers";
 import FollowBarItem from "./FollowBarItem";
 
 interface FollowBarProps {}

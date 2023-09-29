@@ -2,10 +2,10 @@ import { FC, useMemo } from "react";
 import { BiCalendar } from "react-icons/bi";
 import { format } from "date-fns";
 
-import useCurrentUser from "@/hooks/useCurrentUser";
-import useUser from "@/hooks/useUser";
-import useEditModal from "@/hooks/useEditModal";
-import useFollow from "@/hooks/useFollow";
+import useCurrentUser from "@/hooks/fetcher/useCurrentUser";
+import useUser from "@/hooks/fetcher/useUser";
+import useEditModal from "@/hooks/modals/useEditModal";
+import useFollow from "@/hooks/fetcher/useFollow";
 
 interface UserBioProps {
   userId: string;

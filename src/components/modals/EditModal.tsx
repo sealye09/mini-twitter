@@ -1,11 +1,13 @@
 import React, { FC, useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
-import useEditModal from "@/hooks/useEditModal";
-import Modal from "./Modal";
-import useCurrentUser from "@/hooks/useCurrentUser";
-import useUser from "@/hooks/useUser";
 import axios from "axios";
-import ImageUpload from "../ImageUpload";
+
+import useEditModal from "@/hooks/modals/useEditModal";
+import useCurrentUser from "@/hooks/fetcher/useCurrentUser";
+import useUser from "@/hooks/fetcher/useUser";
+import ImageUpload from "@/components/ImageUpload";
+
+import Modal from "./Modal";
 
 interface EditModalProps {}
 

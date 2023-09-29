@@ -6,9 +6,9 @@ import { AiFillHeart, AiOutlineHeart, AiOutlineMessage } from "react-icons/ai";
 import { MdOutlineMoreHoriz } from "react-icons/md";
 
 import { PostFeed } from "@/types";
-import useCurrentUser from "@/hooks/useCurrentUser";
-import useLike from "@/hooks/useLike";
-import Avatar from "../user/Avatar";
+import useCurrentUser from "@/hooks/fetcher/useCurrentUser";
+import useLike from "@/hooks/fetcher/useLike";
+import Avatar from "@/components/user/Avatar";
 
 interface PostProps {
   post: PostFeed;

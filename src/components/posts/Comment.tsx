@@ -4,8 +4,8 @@ import { formatDistanceToNowStrict } from "date-fns";
 import { MdOutlineMoreHoriz } from "react-icons/md";
 
 import { CommentFeed } from "@/types";
-import useCurrentUser from "@/hooks/useCurrentUser";
-import Avatar from "../user/Avatar";
+import useCurrentUser from "@/hooks/fetcher/useCurrentUser";
+import Avatar from "@/components/user/Avatar";
 
 interface CommentProps {
   comment: CommentFeed;

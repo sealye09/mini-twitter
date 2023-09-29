@@ -5,7 +5,7 @@ interface LoaderProps {}
 
 const Loader: FC<LoaderProps> = ({}) => {
   return (
-    <div className="flex justify-center items-center h-full w-full pt-20">
+    <div className="flex justify-center items-center h-full w-full pt-20 pb-20">
       <ClipLoader
         color="lightblue"
         size={60}
