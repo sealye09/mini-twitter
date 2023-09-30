@@ -27,6 +27,13 @@ const PostFeed = () => {
     }
   }, [data, page]);
 
+  // userId 变化时，重置 posts
+  useEffect(() => {
+    setPosts([...data]);
+    setPage(1);
+    setLimit(10);
+  }, [userId]);
+
   return (
     <div className="w-full">
       {posts.map((post) => (
