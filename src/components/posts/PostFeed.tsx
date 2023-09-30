@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import usePosts from "@/hooks/fetcher/usePosts";
@@ -5,36 +6,40 @@ import { useScrollEnd } from "@/hooks/useScrollEnd";
 import Loader from "@/components/Loader";
 
 import Post from "./Post";
-import { useEffect } from "react";
 
 const PostFeed = () => {
   const router = useRouter();
-  const page = Number(router.query.page) || 0;
-  const limit = Number(router.query.limit) || 10;
   const userId = (router.query.userId as string) || "";
 
-  const { data: posts = [], isLoading } = usePosts({ userId, page, limit });
-  const isBottom = useScrollEnd();
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+  const [posts, setPosts] = useState<any[]>([]);
+  const { data, isLoading, hasMore } = usePosts({ userId, page, limit });
+
+  useScrollEnd(() => {
+    if (!hasMore) return;
+    setPage((prev) => prev + 1);
+  });
 
   useEffect(() => {
-    if (isBottom) {
-      router.push({ pathname: "/", query: { page: page + 1, limit, userId } });
+    if (data) {
+      setPosts((prev) => [...prev, ...data]);
     }
-  }, [isBottom]);
-
-  if (!posts || isLoading) {
-    return <Loader />;
-  }
+  }, [data, page]);
 
   return (
     <div className="w-full">
       {posts.map((post) => (
         <Post
-          key={post.id}
           post={post}
+          key={post.id}
         />
       ))}
-      {isBottom && <Loader />}
+
+      {isLoading && <Loader />}
+      {!hasMore && !isLoading && (
+        <div className="text-center py-8 text-lg font-bold">No more posts</div>
+      )}
     </div>
   );
 };

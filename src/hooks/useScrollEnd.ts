@@ -1,23 +1,26 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+
 import { useThrottle } from "./useThrottle";
 
-export const useScrollEnd = () => {
-  const [scrollEnd, setScrollEnd] = useState(false);
-
+export const useScrollEnd = (callback: () => void) => {
   const handleScroll = useThrottle({
     callback: () => {
       console.log("scroll");
-      const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-      const isBottom = scrollTop + clientHeight >= scrollHeight - 50;
-      setScrollEnd(isBottom);
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.body.clientHeight;
+      const scrollY = window.scrollY;
+      if (windowHeight + scrollY + 50 >= documentHeight) {
+        console.log("end");
+        callback();
+      }
     },
-    delay: 300,
+    delay: 500,
   });
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  return scrollEnd;
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [callback]);
 };
