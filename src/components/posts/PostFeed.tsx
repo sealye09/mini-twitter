@@ -25,7 +25,7 @@ const PostFeed = () => {
     if (data) {
       setPosts((prev) => [...prev, ...data]);
     }
-  }, [data, page]);
+  }, [userId, page, limit]);
 
   // userId 变化时，重置 posts
   useEffect(() => {
