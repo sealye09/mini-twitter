@@ -19,6 +19,7 @@ const UserHero: FC<UserHeroProps> = ({ userId }) => {
           <Image
             src={fetchedUser.coverImageUrl}
             fill
+            sizes="100%"
             alt="Cover Image"
             style={{ objectFit: "cover" }}
           />

@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useRef, useState } from "react";
+import React, { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 
@@ -9,17 +9,23 @@ import ImageUpload from "@/components/ImageUpload";
 
 import Modal from "./Modal";
 
-interface EditModalProps {}
+type UserInfo = {
+  name: string;
+  username: string;
+  bio: string;
+  avatarUrl?: string;
+  coverImageUrl?: string;
+};
 
-const EditModal: FC<EditModalProps> = ({}) => {
+const EditModal = () => {
   const { data: currentUser } = useCurrentUser();
   const { mutate: mutateFetchedUser } = useUser(currentUser?.id);
   const editStore = useEditModal();
 
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
-  const [avatarUrl, setAvatarUrl] = useState("");
-  const [coverImageUrl, setCoverImageUrl] = useState("");
+  const [avatar, setAvatar] = useState("");
+  const [coverImage, setCoverImage] = useState("");
   const [bio, setBio] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -35,21 +41,39 @@ const EditModal: FC<EditModalProps> = ({}) => {
       }
       return true;
     };
+
     try {
       setIsLoading(true);
       if (!handelError()) throw new Error();
 
-      console.log(avatarUrl.split(","));
+      let avatarUrl = "";
+      let coverImageUrl = "";
 
-      // request
-      await axios.patch("/api/users/edit", {
+      // upload image
+      if (avatar !== "") {
+        const res = await axios.post("/api/upload", { image: avatar });
+        avatarUrl = res.data;
+      }
+
+      if (coverImage !== "") {
+        const res = await axios.post("/api/upload", { image: coverImage });
+        coverImageUrl = res.data;
+      }
+
+      const newUserInfo: UserInfo = {
         name,
         username,
         bio,
         avatarUrl,
         coverImageUrl,
-      });
-      mutateFetchedUser();
+      };
+
+      if (avatarUrl === "") delete newUserInfo.avatarUrl;
+      if (coverImageUrl === "") delete newUserInfo.coverImageUrl;
+
+      // request
+      await axios.patch("/api/users/edit", newUserInfo);
+      await mutateFetchedUser();
 
       toast.success("Updated Succeed");
       setIsLoading(false);
@@ -59,70 +83,86 @@ const EditModal: FC<EditModalProps> = ({}) => {
       toast.error("Updated Failed");
     } finally {
       setIsLoading(false);
+      setAvatar("");
+      setCoverImage("");
     }
-  }, [name, username, bio, avatarUrl, coverImageUrl, editStore, mutateFetchedUser]);
+  }, [name, username, bio, avatar, coverImage]);
+
+  const onClose = useCallback(() => {
+    editStore.onClose();
+    setAvatar("");
+    setCoverImage("");
+  }, [editStore.isOpen]);
 
   useEffect(() => {
-    setAvatarUrl(currentUser?.avatarUrl as string);
-    setCoverImageUrl(currentUser?.coverImageUrl as string);
-    setName(currentUser?.name as string);
-    setUsername(currentUser?.username as string);
-    setBio(currentUser?.bio as string);
-  }, [
-    currentUser?.name,
-    currentUser?.username,
-    currentUser?.bio,
-    currentUser?.avatarUrl,
-    currentUser?.coverImageUrl,
-  ]);
+    if (!currentUser) return;
+    setName(currentUser.name);
+    setUsername(currentUser.username);
+    setBio(currentUser.bio as string);
+  }, [currentUser]);
 
-  const body = (
-    <div className="flex flex-col justify-center content-center items-center gap-6 w-full pt-10">
-      <ImageUpload
-        value={avatarUrl}
-        disabled={isLoading}
-        onChange={(image) => {
-          setAvatarUrl(image);
-        }}
-        label="avatar"
-      />
-      <ImageUpload
-        value={coverImageUrl}
-        disabled={isLoading}
-        onChange={(image) => {
-          setCoverImageUrl(image);
-        }}
-        label="cover"
-      />
-      <input
-        disabled={isLoading}
-        type="text"
-        placeholder="Name"
-        className="input input-bordered min-w-fit w-5/6"
-        value={name}
-        onChange={(e) => {
-          setName(e.target.value);
-        }}
-      />
-      <input
-        disabled={isLoading}
-        type="text"
-        placeholder="Username"
-        className="input input-bordered min-w-fit w-5/6"
-        value={username}
-        onChange={(e) => {
-          setUsername(e.target.value);
-        }}
-      />
-      <textarea
-        className="textarea textarea-bordered w-5/6"
-        placeholder="Bio"
-        value={bio}
-        onChange={(e) => {
-          setBio(e.target.value);
-        }}
-      ></textarea>
-    </div>
+  const body = useMemo(
+    () => (
+      <div className="flex flex-col justify-center content-center items-center gap-6 w-full pt-10">
+        <ImageUpload
+          value={avatar}
+          disabled={isLoading}
+          onChange={(image) => {
+            setAvatar(image);
+          }}
+          label="avatar"
+        />
+        <ImageUpload
+          value={coverImage}
+          disabled={isLoading}
+          onChange={(image) => {
+            setCoverImage(image);
+          }}
+          label="cover"
+        />
+        <input
+          disabled={isLoading}
+          type="text"
+          placeholder="Name"
+          className="input input-bordered min-w-fit w-5/6"
+          value={name}
+          onChange={(e) => {
+            setName(e.target.value);
+          }}
+        />
+        <input
+          disabled={isLoading}
+          type="text"
+          placeholder="Username"
+          className="input input-bordered min-w-fit w-5/6"
+          value={username}
+          onChange={(e) => {
+            setUsername(e.target.value);
+          }}
+        />
+        <textarea
+          className="textarea textarea-bordered w-5/6"
+          placeholder="Bio"
+          value={bio}
+          onChange={(e) => {
+            setBio(e.target.value);
+          }}
+        />
+      </div>
+    ),
+    [
+      avatar,
+      bio,
+      coverImage,
+      isLoading,
+      name,
+      username,
+      setAvatar,
+      setBio,
+      setCoverImage,
+      setName,
+      setUsername,
+    ]
   );
 
   return (
@@ -132,7 +172,7 @@ const EditModal: FC<EditModalProps> = ({}) => {
       actionLabel="Update"
       body={body}
       isOpen={editStore.isOpen}
-      onClose={editStore.onClose}
+      onClose={onClose}
       disabled={isLoading}
       onSubmit={onFinish}
     />

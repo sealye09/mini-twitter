@@ -15,7 +15,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       // 得到分页参数，转成数字类型
       const { page = 1, limit = 10 } = req.query;
       const skip = (Number(page) - 1) * Number(limit);
-      console.log("🚀 ~ file: index.ts:18 ~ handler ~ skip:", skip);
       let posts;
       // user's posts
       const hasMore = (await prisma.post.count()) > skip + Number(limit);
