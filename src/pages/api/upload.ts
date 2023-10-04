@@ -36,7 +36,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const fileName = `${currentUser.username}-${Date.now()}.${extension ? extension : "png"}`;
     const filePath = path.join(process.cwd(), `public/uploads/${fileName}`);
 
-    console.log("🚀 ~ file: upload.ts:39 ~ handler ~ filePath:", filePath)
     await fs.writeFile(filePath, imageBuffer);
 
     return res.status(200).json(`/uploads/${fileName}`);

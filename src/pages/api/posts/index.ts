@@ -14,10 +14,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       const { userId } = req.query;
       // 得到分页参数，转成数字类型
       const { page = 1, limit = 10 } = req.query;
-      const skip = (Number(page) - 1) * Number(limit);
       let posts;
       // user's posts
-      const hasMore = (await prisma.post.count()) > skip + Number(limit);
       if (userId && typeof userId === "string") {
         posts = await prisma.post.findMany({
           where: {
@@ -30,13 +28,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           orderBy: {
             createdAt: "desc",
           },
-          skip: skip,
+          skip: (Number(page) - 1) * Number(limit),
           take: Number(limit),
         });
+        const hasMore =
+          (await prisma.post.count({
+            where: {
+              userId: userId,
+            },
+          })) >
+          Number(page) * Number(limit);
         return res.status(200).json({ posts, hasMore });
       } else {
         // all posts
-        const hasMore = (await prisma.post.count()) > skip + Number(limit);
         posts = await prisma.post.findMany({
           include: {
             user: true,
@@ -45,11 +49,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           orderBy: {
             createdAt: "desc",
           },
-          skip: skip,
+          skip: (Number(page) - 1) * Number(limit),
           take: Number(limit),
         });
+        const hasMore = (await prisma.post.count()) > Number(page) * Number(limit);
+        return res.status(200).json({ posts, hasMore });
       }
-      return res.status(200).json({ posts, hasMore });
     }
 
     // create post
