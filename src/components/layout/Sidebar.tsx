@@ -108,10 +108,12 @@ const SideBar: FC<SideBarProps> = () => {
             }}
           >
             <div className="flex m-4 justify-start items-center">
-              <Avatar
-                className="h-8 w-8"
-                src={currUser.avatarUrl}
-              />
+              <div className="h-8 w-8">
+                <Avatar
+                  className="h-full w-full block"
+                  src={currUser.avatarUrl}
+                />
+              </div>
               <div className="flex flex-col items-start justify-between px-4 w-full">
                 <p className="font-semibold text-sm">{currUser.name}</p>
                 <p className="text-sm text-neutral-500">@{currUser.username}</p>
