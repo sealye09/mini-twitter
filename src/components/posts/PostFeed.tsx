@@ -21,10 +21,12 @@ const PostFeed = () => {
     setPage((prev) => prev + 1);
   });
 
+  // TODO: 优化
+  // 添加新的 posts
   useEffect(() => {
-    if (data) {
-      setPosts((prev) => [...prev, ...data]);
-    }
+    if (!data) return;
+
+    setPosts((prev) => [...prev, ...data]);
   }, [userId, page, limit, isLoading]);
 
   // userId 变化时，重置 posts

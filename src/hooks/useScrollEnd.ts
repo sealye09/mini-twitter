@@ -22,5 +22,5 @@ export const useScrollEnd = (callback: () => void) => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [callback]);
+  }, [handleScroll]);
 };

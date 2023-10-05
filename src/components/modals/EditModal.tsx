@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 
@@ -20,7 +20,8 @@ type UserInfo = {
 const EditModal = () => {
   const { data: currentUser } = useCurrentUser();
   const { mutate: mutateFetchedUser } = useUser(currentUser?.id);
-  const editStore = useEditModal();
+  const isOpen = useEditModal((state) => state.isOpen);
+  const onClose = useEditModal((state) => state.onClose);
 
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
@@ -29,7 +30,7 @@ const EditModal = () => {
   const [bio, setBio] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const onFinish = useCallback(async () => {
+  const onFinish = async () => {
     const handelError = () => {
       if (name === "") {
         toast.error("Invalid Email");
@@ -77,7 +78,7 @@ const EditModal = () => {
 
       toast.success("Updated Succeed");
       setIsLoading(false);
-      editStore.onClose();
+      onClose();
     } catch (error) {
       console.log(error);
       toast.error("Updated Failed");
@@ -86,13 +87,13 @@ const EditModal = () => {
       setAvatar("");
       setCoverImage("");
     }
-  }, [name, username, bio, avatar, coverImage]);
+  };
 
-  const onClose = useCallback(() => {
-    editStore.onClose();
+  const handleClose = () => {
+    onClose();
     setAvatar("");
     setCoverImage("");
-  }, [editStore.isOpen]);
+  };
 
   useEffect(() => {
     if (!currentUser) return;
@@ -171,8 +172,8 @@ const EditModal = () => {
       id="edit"
       actionLabel="Update"
       body={body}
-      isOpen={editStore.isOpen}
-      onClose={onClose}
+      isOpen={isOpen}
+      onClose={handleClose}
       disabled={isLoading}
       onSubmit={onFinish}
     />

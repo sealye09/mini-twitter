@@ -20,17 +20,14 @@ const Post: React.FC<PostProps> = ({ post }) => {
   const { data: currentUser } = useCurrentUser();
   const { hasLiked, toggleLike } = useLike({ postId: post.id, userId: currentUser?.id });
 
-  const goToUser = useCallback(
-    (event: any) => {
-      event.stopPropagation();
-      router.push(`/users/${post.userId}`);
-    },
-    [router, currentUser?.id],
-  );
+  const goToUser = (event: any) => {
+    event.stopPropagation();
+    router.push(`/users/${post.userId}`);
+  };
 
-  const goToPost = useCallback(() => {
+  const goToPost = () => {
     router.push(`/posts/${post.id}`);
-  }, [router, post.id]);
+  };
 
   const onLike = useCallback(
     async (event: any) => {
@@ -41,7 +38,7 @@ const Post: React.FC<PostProps> = ({ post }) => {
       }
       toggleLike();
     },
-    [currentUser, toggleLike],
+    [currentUser, toggleLike]
   );
 
   const LikeIcon = hasLiked ? AiFillHeart : AiOutlineHeart;
