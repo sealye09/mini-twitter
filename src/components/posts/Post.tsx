@@ -10,11 +10,11 @@ import useCurrentUser from "@/hooks/fetcher/useCurrentUser";
 import useLike from "@/hooks/fetcher/useLike";
 import Avatar from "@/components/user/Avatar";
 
-interface PostProps {
+interface PostProps extends React.HTMLAttributes<HTMLDivElement> {
   post: PostFeed;
 }
 
-const Post: React.FC<PostProps> = ({ post }) => {
+const Post: React.FC<PostProps> = ({ post, ...rest }) => {
   const router = useRouter();
 
   const { data: currentUser } = useCurrentUser();
@@ -53,9 +53,10 @@ const Post: React.FC<PostProps> = ({ post }) => {
   return (
     <div
       onClick={goToPost}
-      className="border-b-[1px] border-base-300 p-4 hover:bg-base-200 transition cursor-pointer"
+      className="border-b-[1px] border-x-[1px] border-base-300 p-4 hover:bg-base-200 transition cursor-pointer"
+      {...rest}
     >
-      <div className="flex flex-row items-start gap-4 w-full">
+      <div className="flex flex-row gap-4">
         <div
           className="min-w-fit w-12 h-12"
           onClick={goToUser}
@@ -66,8 +67,9 @@ const Post: React.FC<PostProps> = ({ post }) => {
           />
         </div>
 
-        <div className="flex flex-col w-full gap-2">
-          <div className="flex">
+        {/* w-1 固定高度 ！！不然p标签中的文本不换行 */}
+        <div className="w-1 flex flex-col flex-1 gap-2">
+          <div className="flex flex-1">
             <div className="flex justify-between w-full">
               <div className="flex items-center gap-2">
                 <p
@@ -98,8 +100,8 @@ const Post: React.FC<PostProps> = ({ post }) => {
             </div>
           </div>
 
-          <div className="mt-1">
-            <p>{post.content}</p>
+          <div className="mt-1 flex-1">
+            <p className="break-words">{post.content}</p>
           </div>
           <div className="flex flex-row items-center gap-6 -ml-2">
             <div className="group flex flex-row items-center text-neutral-500 cursor-pointer transition hover:text-sky-500">

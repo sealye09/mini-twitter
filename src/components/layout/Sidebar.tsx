@@ -108,7 +108,7 @@ const SideBar: FC<SideBarProps> = () => {
             }}
           >
             <div className="flex m-4 justify-start items-center">
-              <div className="h-8 w-8">
+              <div className="h-8 w-12">
                 <Avatar
                   className="h-full w-full block"
                   src={currUser.avatarUrl}

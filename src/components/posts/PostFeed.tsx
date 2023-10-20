@@ -2,24 +2,22 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import usePosts from "@/hooks/fetcher/usePosts";
-import { useScrollEnd } from "@/hooks/useScrollEnd";
-import Loader from "@/components/Loader";
-
-import Post from "./Post";
+import VirtualList from "../VirtualList";
 
 const PostFeed = () => {
   const router = useRouter();
   const userId = (router.query.userId as string) || "";
 
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(10);
+  const [limit, setLimit] = useState(20);
   const [posts, setPosts] = useState<any[]>([]);
   const { data, isLoading, hasMore } = usePosts({ userId, page, limit });
 
-  useScrollEnd(() => {
+  const handleScrollEnd = () => {
     if (!hasMore) return;
     setPage((prev) => prev + 1);
-  });
+    console.log("handleScrollEnd");
+  };
 
   // TODO: 优化
   // 添加新的 posts
@@ -37,19 +35,17 @@ const PostFeed = () => {
   }, [userId]);
 
   return (
-    <div className="w-full">
-      {posts.map((post) => (
-        <Post
-          post={post}
-          key={post.id}
-        />
-      ))}
-
-      {isLoading && <Loader />}
-      {!hasMore && !isLoading && (
-        <div className="text-center py-8 text-lg font-bold">No more posts</div>
-      )}
-    </div>
+    <VirtualList
+      items={posts}
+      estimatedItemHeight={110}
+      prevCount={2}
+      nextCount={2}
+      onScrollEnd={handleScrollEnd}
+      containerHeight={650}
+      containerWidth={574}
+      hasMore={hasMore}
+      loading={isLoading}
+    />
   );
 };
 
