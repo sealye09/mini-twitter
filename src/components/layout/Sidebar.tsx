@@ -2,7 +2,13 @@ import React, { FC } from "react";
 import { useRouter } from "next/router";
 import { signOut } from "next-auth/react";
 
-import { BsBellFill, BsXDiamondFill, BsHouseFill, BsTwitter } from "react-icons/bs";
+import {
+  BsBellFill,
+  BsXDiamondFill,
+  BsHouseFill,
+  BsTwitter,
+  BsBoxArrowRight,
+} from "react-icons/bs";
 import { FaFeather, FaUser } from "react-icons/fa";
 
 import useLoginModal from "@/hooks/modals/useLoginModal";
@@ -107,14 +113,12 @@ const SideBar: FC<SideBarProps> = () => {
               router.push(`/users/${currUser.id}`);
             }}
           >
-            <div className="flex m-4 justify-start items-center">
-              <div className="h-8 w-12">
-                <Avatar
-                  className="h-full w-full block"
-                  src={currUser.avatarUrl}
-                />
-              </div>
-              <div className="flex flex-col items-start justify-between px-4 w-full">
+            <div className="flex m-4 gap-2 justify-start items-center w-60">
+              <Avatar
+                className="h-10 w-10"
+                src={currUser.avatarUrl}
+              />
+              <div className="flex flex-1 flex-col items-start justify-between">
                 <p className="font-semibold text-sm">{currUser.name}</p>
                 <p className="text-sm text-neutral-500">@{currUser.username}</p>
               </div>
@@ -124,7 +128,7 @@ const SideBar: FC<SideBarProps> = () => {
                   signOut();
                 }}
               >
-                Logout
+                <BsBoxArrowRight />
               </button>
             </div>
           </div>

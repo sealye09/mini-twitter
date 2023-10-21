@@ -15,7 +15,7 @@ const Header: React.FC<HeaderProps> = ({ showBackArrow, label }) => {
   }, [router]);
 
   return (
-    <div className="border-b-[1px] border-base-300 p-5">
+    <div className="border-b-[1px] border-base-300 p-5 sticky top-0 z-50 bg-base-50/80 backdrop-blur-md">
       <div className="flex flex-row items-center gap-2">
         {showBackArrow && (
           <BsArrowLeft
@@ -24,7 +24,15 @@ const Header: React.FC<HeaderProps> = ({ showBackArrow, label }) => {
             className="cursor-pointer hover:opacity-70 transition"
           />
         )}
-        <h1 className="text-lg font-semibold">{label}</h1>
+        <h1
+          className="text-lg font-semibold cursor-pointer"
+          onClick={() => {
+            // 回到顶部
+            window.scrollTo(0, 0);
+          }}
+        >
+          {label}
+        </h1>
       </div>
     </div>
   );

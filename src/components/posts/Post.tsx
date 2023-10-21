@@ -53,7 +53,7 @@ const Post: React.FC<PostProps> = ({ post, ...rest }) => {
   return (
     <div
       onClick={goToPost}
-      className="border-b-[1px] border-x-[1px] border-base-300 p-4 hover:bg-base-200 transition cursor-pointer"
+      className="border-b-[1px] border-base-300 p-4 hover:bg-base-200 transition cursor-pointer"
       {...rest}
     >
       <div className="flex flex-row gap-4">

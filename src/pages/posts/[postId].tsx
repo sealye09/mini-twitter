@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 
 import usePost from "@/hooks/fetcher/usePost";
-import Header from "@/components/Header";
+import Header from "@/components/layout/Header";
 import Post from "@/components/posts/Post";
 import Loader from "@/components/Loader";
 import CommentFeed from "@/components/posts/CommentFeed";

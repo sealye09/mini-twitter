@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import useUser from "@/hooks/fetcher/useUser";
 
-import Header from "@/components/Header";
+import Header from "@/components/layout/Header";
 import UserHero from "@/components/user/UserHero";
 import UserBio from "@/components/user/UserBio";
 import PostFeed from "@/components/posts/PostFeed";

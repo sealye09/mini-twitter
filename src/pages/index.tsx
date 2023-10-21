@@ -1,4 +1,4 @@
-import Header from "@/components/Header";
+import Header from "@/components/layout/Header";
 import PostCreator from "@/components/posts/PostCreator";
 import PostFeed from "@/components/posts/PostFeed";
 
