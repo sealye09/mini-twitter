@@ -1,7 +1,8 @@
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { useThrottle } from "@/hooks/useThrottle";
 import Post from "./posts/Post";
+import { useDebounce } from "@/hooks/useDebouce";
 
 interface IPosition {
   index: number;
@@ -15,7 +16,7 @@ interface VirtualListProps {
   items: any[];
   estimatedItemHeight?: number;
   containerHeight: number;
-  containerWidth: number;
+  containerWidth?: number;
   prevCount?: number;
   nextCount?: number;
   hasMore?: boolean;
@@ -34,6 +35,7 @@ const VirtualList: FC<VirtualListProps> = ({
   loading,
   onScrollEnd,
 }) => {
+  console.log(items);
   const visibleCount = Math.ceil(containerHeight / estimatedItemHeight);
   prevCount = prevCount || visibleCount;
   nextCount = nextCount || visibleCount;
@@ -70,9 +72,12 @@ const VirtualList: FC<VirtualListProps> = ({
   };
 
   // 查找 startIdx，缓冲 prevCount 个元素
-  const idx = binarySearch(scrollTop) || 0;
+  const idx = useMemo(() => binarySearch(scrollTop) || 0, [scrollTop]);
   const startIdx = Math.max(idx - prevCount, 0);
   const endIdx = Math.min(idx + visibleCount + nextCount, positions.length - 1) || visibleCount;
+
+  console.log("startIdx", startIdx, "endIdx", endIdx);
+  console.log("scrollTop", scrollTop);
 
   const listHeight =
     positions.length > 0 && positions[positions.length - 1]
@@ -82,35 +87,41 @@ const VirtualList: FC<VirtualListProps> = ({
   const contentHeight = listHeight - contentOffset;
 
   const containerStyle = {
-    width: `${containerWidth}px`,
-    height: `${containerHeight}px`,
-    overflow: "hidden auto",
+    width: containerWidth ? `${containerWidth}px` : "100%",
+    minHeight: `${containerHeight}px`,
+    overflow: "hidden",
   };
 
   const contentStyle = {
     width: "100%",
-    height: `${contentHeight}px`,
+    // BUG: 高度错误导致滚动条跳动
+    // TODO: 还没搞懂这个计算
+    height: `${listHeight + estimatedItemHeight * 2}px`,
     transform: `translateY(${contentOffset}px)`,
   };
 
+  const scrollCallback = useCallback(() => {
+    if (!containerRef.current || !contentRef.current) return;
+
+    const { clientHeight, scrollHeight, scrollTop } = document.documentElement;
+    const top = containerRef.current.offsetTop;
+    setScrollTop(() => scrollTop - top);
+
+    // if (scrollHeight - clientHeight - scrollTop < 20) {
+    //   // if (loading || !hasMore) return;
+    //   onScrollEnd && onScrollEnd();
+    // }
+  }, [onScrollEnd, loading, hasMore]);
+
   const handleScroll = useThrottle({
-    callback: () => {
-      if (!containerRef.current || !contentRef.current) return;
-
-      const { clientHeight, scrollHeight, scrollTop } = containerRef.current;
-      console.log("contentHeight:", contentHeight);
-      console.log("scrollTop:", scrollTop);
-
-      setScrollTop(scrollTop);
-
-      if (scrollHeight - clientHeight - scrollTop < 20) {
-        console.log("到底了");
-        if (endIdx === positions.length - 1) {
-          onScrollEnd && onScrollEnd();
-        }
-      }
-    },
+    callback: scrollCallback,
     delay: 500,
+  });
+
+  const loadMore = useDebounce({
+    callback: () => onScrollEnd && onScrollEnd(),
+    delay: 500,
+    immediate: true,
   });
 
   // 初始化 positions
@@ -193,6 +204,15 @@ const VirtualList: FC<VirtualListProps> = ({
     initPositions();
   }, [contentRef.current, containerRef.current, items.length]);
 
+  useEffect(() => {
+    document.documentElement.scrollTop = 0;
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   // 更新
   useEffect(() => {
     // maxEndIdx < endIdx 时更新 positions，回滚时不更新
@@ -207,7 +227,6 @@ const VirtualList: FC<VirtualListProps> = ({
     <div
       ref={containerRef}
       style={containerStyle}
-      onScroll={handleScroll}
     >
       <div
         ref={contentRef}
@@ -223,17 +242,20 @@ const VirtualList: FC<VirtualListProps> = ({
           );
         })}
 
-        {loading && (
-          <div className="flex justify-center py-2">
-            <p>Loading...</p>
-          </div>
-        )}
-
-        {!loading && !hasMore && (
-          <div className="flex justify-center py-4">
-            <p>没有更多了</p>
-          </div>
-        )}
+        <div className="flex justify-center items-center h-20">
+          {loading ? (
+            <p className="animate-pulse"> 加载中...</p>
+          ) : hasMore ? (
+            <p
+              onClick={loadMore}
+              className="cursor-pointer hover:underline"
+            >
+              加载更多
+            </p>
+          ) : (
+            <p> 没有更多了</p>
+          )}
+        </div>
       </div>
     </div>
   );
