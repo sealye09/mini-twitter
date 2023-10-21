@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { ChangeEvent, useCallback, useState } from "react";
 
 interface ImageUploadProps {
   onChange: (base64: string) => void;
@@ -7,32 +7,29 @@ interface ImageUploadProps {
   disabled?: boolean;
 }
 
-const ImageUpload: React.FC<ImageUploadProps> = ({
-  onChange,
-  label,
-  value,
-  disabled,
-}) => {
+const ImageUpload: React.FC<ImageUploadProps> = ({ onChange, label, value, disabled }) => {
   const [base64, setBase64] = useState(value);
 
   const handleChange = useCallback(
     (base64: string) => {
       onChange(base64);
     },
-    [onChange],
+    [onChange]
   );
 
   const handleFile = useCallback(
-    (files: FileList) => {
-      const file = files[0];
+    (e: ChangeEvent<HTMLInputElement>) => {
+      const files = e.target.files;
+      if (!files) return;
+
       const reader = new FileReader();
       reader.onload = (event: any) => {
         setBase64(event.target.result);
         handleChange(event.target.result);
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(files[0]);
     },
-    [handleChange],
+    [handleChange]
   );
 
   return (
@@ -44,7 +41,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
         type="file"
         accept=".jpg, .jpeg, .png"
         disabled={disabled}
-        onChange={(e) => handleFile(e.target.files!)}
+        onChange={handleFile}
         className="file-input file-input-bordered file-input-secondary max-w-xs"
       />
     </div>

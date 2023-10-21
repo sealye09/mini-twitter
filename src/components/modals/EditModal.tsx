@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 
@@ -8,6 +8,8 @@ import useUser from "@/hooks/fetcher/useUser";
 import ImageUpload from "@/components/ImageUpload";
 
 import Modal from "./Modal";
+import useImageCropModal from "@/hooks/modals/useImageCropModal";
+import ImageCropModal from "./ImageCropModal";
 
 type UserInfo = {
   name: string;
@@ -22,6 +24,8 @@ const EditModal = () => {
   const { mutate: mutateFetchedUser } = useUser(currentUser?.id);
   const isOpen = useEditModal((state) => state.isOpen);
   const onClose = useEditModal((state) => state.onClose);
+
+  const cropModal = useImageCropModal();
 
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
@@ -110,6 +114,7 @@ const EditModal = () => {
           disabled={isLoading}
           onChange={(image) => {
             setAvatar(image);
+            cropModal.onOpen(image);
           }}
           label="avatar"
         />
@@ -118,6 +123,7 @@ const EditModal = () => {
           disabled={isLoading}
           onChange={(image) => {
             setCoverImage(image);
+            cropModal.onOpen(image);
           }}
           label="cover"
         />
@@ -167,16 +173,28 @@ const EditModal = () => {
   );
 
   return (
-    <Modal
-      title="Profile"
-      id="edit"
-      actionLabel="Update"
-      body={body}
-      isOpen={isOpen}
-      onClose={handleClose}
-      disabled={isLoading}
-      onSubmit={onFinish}
-    />
+    <>
+      <Modal
+        title="Profile"
+        id="edit"
+        actionLabel="Update"
+        body={body}
+        isOpen={isOpen}
+        onClose={handleClose}
+        disabled={isLoading}
+        onSubmit={onFinish}
+      />
+      <ImageCropModal
+        value={avatar}
+        onChange={(value: string) => {
+          setAvatar(value);
+        }}
+        onClose={() => {
+          cropModal.onClose();
+        }}
+        isOpen={cropModal.isOpen}
+      />
+    </>
   );
 };
 

@@ -1,8 +1,8 @@
+import { cn } from "@/libs/utils";
 import React, { FC, ReactNode, useCallback } from "react";
 
-interface ModalProps {
+interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
   title?: string;
-  id: string;
   body: ReactNode | ReactNode[];
   footer?: ReactNode | ReactNode[];
   isOpen: boolean;
@@ -22,6 +22,8 @@ const Modal: FC<ModalProps> = ({
   actionLabel,
   footer,
   disabled,
+  className,
+  ...rest
 }) => {
   const handleClose = useCallback(() => {
     if (disabled) {
@@ -43,7 +45,7 @@ const Modal: FC<ModalProps> = ({
   }
 
   return (
-    <div>
+    <>
       <input
         type="checkbox"
         id={`${id}-modal`}
@@ -52,7 +54,7 @@ const Modal: FC<ModalProps> = ({
         onChange={() => {}}
       />
       <div className="modal">
-        <div className="modal-box">
+        <div className={cn("modal-box", className)}>
           {/* title */}
           <div>
             <h3 className="font-bold text-lg text-center">{title}</h3>
@@ -80,7 +82,7 @@ const Modal: FC<ModalProps> = ({
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
