@@ -55,15 +55,17 @@ const EditModal = () => {
       let coverImageUrl = "";
 
       // upload image
-      if (avatar !== "") {
-        const res = await axios.post("/api/upload", { image: avatar });
-        avatarUrl = res.data;
-      }
+      // if (avatar !== "") {
+      //   const res = await axios.post("/api/upload", { image: avatar });
+      //   avatarUrl = res.data;
+      // }
+      avatarUrl = avatar;
 
-      if (coverImage !== "") {
-        const res = await axios.post("/api/upload", { image: coverImage });
-        coverImageUrl = res.data;
-      }
+      // if (coverImage !== "") {
+      //   const res = await axios.post("/api/upload", { image: coverImage });
+      //   coverImageUrl = res.data;
+      // }
+      coverImageUrl = coverImage;
 
       const newUserInfo: UserInfo = {
         name,
